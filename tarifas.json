@@ -1,0 +1,52 @@
+{
+    "1": {
+        "tarifa": "T1G1",
+        "cf": "3",
+        "csc": "2",
+        "pa": "4",
+        "ent2": "1",
+        "epta": "",
+        "evalle": "",
+        "eresto": ""
+    },
+    "2": {
+        "tarifa": "T1G2",
+        "cf": "2",
+        "csc": "4",
+        "pa": "3",
+        "ent2": "2",
+        "epta": "",
+        "evalle": "",
+        "eresto": ""
+    },
+    "3": {
+        "tarifa": "T1G3",
+        "cf": "4",
+        "csc": "5",
+        "pa": "1",
+        "ent2": "2",
+        "epta": "",
+        "evalle": "",
+        "eresto": ""
+    },
+    "4": {
+        "tarifa": "T2",
+        "cf": "7",
+        "csc": "8",
+        "pa": "2",
+        "ent2": "1",
+        "epta": "",
+        "evalle": "",
+        "eresto": ""
+    },
+    "5": {
+        "tarifa": "T3BT",
+        "cf": "5",
+        "csc": "2",
+        "pa": "1",
+        "ent2": "3",
+        "epta": "",
+        "evalle": "",
+        "eresto": ""
+    }
+}

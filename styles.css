@@ -4,19 +4,24 @@ body{
     text-align: center;
 }
 
+
 li{
     list-style: none;
 }
 
-/*form {
-    
-    padding: 1%;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #f9f9f9;
-    max-width:max-content;
-    margin: 0 auto;
-} */
+.buttons-container{
+    text-align: left;
+    width: fit-content; /* Ajusta el ancho al contenido */
+    margin-left: auto; /* Establece el margen izquierdo a auto */
+    margin-right: auto; /* Establece el margen derecho a auto */
+    padding: 2%;
+    background: #f4f9ff;
+    border: 1px solid;
+}
+
+.buttons-container a{
+    margin-right: 5px;
+}
 
 .hidden{
     display: none;
@@ -27,7 +32,23 @@ li{
 }
 
 .selected{
-    background-color: aquamarine;
+    background-color: rgb(23, 209, 178);
+    border: 2.5px solid black;
+}
+.selected:hover{
+    background-color: rgb(26, 184, 157);
+}
+
+.campo{
+    font-weight: 600;
+}
+
+.info-icon{
+    cursor: pointer;
+}
+
+.info-icon:hover{
+    color: rgb(127, 204, 240);
 }
 
 /*Formulario */
