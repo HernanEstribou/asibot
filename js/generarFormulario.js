@@ -72,10 +72,10 @@ function generarFormulario(tipo, numPeriodos) {
                     <input class="form-control" type="text" name="epta" placeholder="">
                 </div>
                 <div class="col-sm-1 mb-3">
-                    <input class="form-control" type="text" name="eValle" placeholder="">
+                    <input class="form-control" type="text" name="evalle" placeholder="">
                 </div>
                 <div class="col-sm-1 mb-3">
-                    <input class="form-control" type="text" name="eResto" placeholder="">
+                    <input class="form-control" type="text" name="eresto" placeholder="">
                 </div>`;
         } else if(tipo==='T2') {
         html += `

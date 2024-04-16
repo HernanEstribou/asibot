@@ -5,9 +5,9 @@
         "csc": "2",
         "pa": "4",
         "ent2": "1",
-        "epta": "",
-        "evalle": "",
-        "eresto": ""
+        "epta": "5",
+        "evalle": "4",
+        "eresto": "3"
     },
     "2": {
         "tarifa": "T1G2",
@@ -15,9 +15,9 @@
         "csc": "4",
         "pa": "3",
         "ent2": "2",
-        "epta": "",
-        "evalle": "",
-        "eresto": ""
+        "epta": "9",
+        "evalle": "8",
+        "eresto": "7"
     },
     "3": {
         "tarifa": "T1G3",

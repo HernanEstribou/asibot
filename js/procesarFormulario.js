@@ -1,5 +1,5 @@
 function refacturar(datosFormulario, formularioTipo){
-    
+    let importe
     let importeAnual;
     let importesReales = [];
     /*let paValues = [];
@@ -26,47 +26,81 @@ function refacturar(datosFormulario, formularioTipo){
         .then(jsonData => {
             
             console.log(jsonData);
+            
+            for (const i in jsonData){
+                importeAnual = 0;
+                console.log(jsonData[i].tarifa)
 
-            if (formularioTipo == 'T2'){
-                for (const i in jsonData){
-                    
-                    let $cf = parseFloat(jsonData[i].cf);
-                    let $csc = parseFloat(jsonData[i].csc); 
-                    let $pa = parseFloat(jsonData[i].pa);
+                let $cf = parseFloat(jsonData[i].cf);
+                let $csc = parseFloat(jsonData[i].csc); 
+                let $pa = parseFloat(jsonData[i].pa); 
+
+                if (formularioTipo == 'T2'){
                     let $ent2 = parseFloat(jsonData[i].ent2);
-
-                    importeAnual = 0;
-                    console.log(jsonData[i].tarifa)
 
                     for (const j in datosFormulario){
                         let csc = parseFloat(datosFormulario[j].csc);
-                        let pa =  parseFloat(datosFormulario[j].pa);
-                        let ent2 = parseFloat(datosFormulario[j].ent2);
+                        let pa =  parseFloat(datosFormulario[j].pa); 
+                        let ent2 = parseFloat(datosFormulario[j].ent2);                       
                         
                         let exc = pa - csc;
-
+                        console.log("Excedente:" + exc);     
+                                         
                         if (exc > 0) {
                             exc = exc * 1.5;
                         } else exc = 0;
-
-                        let importe = $cf + csc * ($csc + exc) + pa * $pa + ent2 * $ent2;                        
+    
+                        importe = $cf + csc * ($csc + exc) + pa * $pa + ent2 * $ent2;                      
+                        console.log(`Fila:${j} = $cf=${$cf} + csc=${csc} * ($csc=${$csc} + exc=${exc}) + pa=${pa} * $pa=${$pa} + ent2=${ent2} * $ent2=${$ent2}`);                                                                                   
                         
-                        console.log(`Fila:${j} = $cf=${$cf} + csc=${csc} * ($csc=${$csc} + exc=${exc}) + pa=${pa} * $pa=${$pa} + ent2=${ent2} * $ent2=${$ent2}`);                        
-                        
-                        console.log("importe "+ j + ": " + importe); 
+                        console.log("Periodo "+ j + " - importe: " + importe); 
                         console.log("////////////");
                         importeAnual = importeAnual + importe;
                     }
-                    console.log("importe Anual " + importeAnual);
 
-                    importesReales.push({[jsonData[i].tarifa]:importeAnual});                    
-                    console.log("---------------");
-                    
-                }                
-                importesReales.forEach(importe =>{
-                  console.log(importe)  
-                })
-            } 
+                } else if(formularioTipo=='T3'){
+                    let $epta = parseFloat(jsonData[i].epta);
+                    let $evalle = parseFloat(jsonData[i].evalle);
+                    let $eresto = parseFloat(jsonData[i].eresto);
+
+                    for (const j in datosFormulario){
+                        let csc = parseFloat(datosFormulario[j].csc);
+                        let pa =  parseFloat(datosFormulario[j].pa); 
+                        let epta = parseFloat(datosFormulario[j].epta);
+                        let evalle = parseFloat(datosFormulario[j].evalle);
+                        let eresto = parseFloat(datosFormulario[j].eresto);
+
+                        let exc = pa - csc;
+                        console.log("Excedente:" + exc);
+
+                        if (exc > 0) {
+                            if (exc < 0.5){
+                                exc = exc * 1.5;
+                            } else if(exc >= 0.5){
+                                exc = exc * 2;
+                            }
+                            
+                        } else exc = 0;
+
+                        importe = $cf + csc * ($csc + exc) + pa * $pa + epta * $epta + evalle * $evalle + eresto * $eresto; 
+                        console.log(`Fila:${j} = $cf=${$cf} + csc=${csc} * ($csc=${$csc} + exc=${exc}) + pa=${pa} * $pa=${$pa} + epta=${epta} * $epta=${$epta} + evalle=${evalle} * $evalle=${$evalle} + eresto=${eresto} * $eresto=${$eresto}`);
+
+                        console.log("Periodo "+ j + " - importe: " + importe); 
+                        console.log("////////////");
+                        importeAnual = importeAnual + importe;
+                    }
+                }               
+                
+                console.log("importe Anual " + importeAnual);
+
+                importesReales.push({[jsonData[i].tarifa]:importeAnual});                    
+                console.log("---------------");
+                
+            }                
+            importesReales.forEach(importe =>{
+                console.log(importe)  
+            })
+             
         })
         .catch(error =>{
             console.error(error);
