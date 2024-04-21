@@ -1,11 +1,8 @@
-function refacturar(datosFormulario, formularioTipo){
-    let importe
-    let importeAnual;
-    let importesReales = [];
-    /*let paValues = [];
-    let paDesde = 0;
-    let paHasta = 0;
-
+function calcularRangoSimulacion(datosFormulario){
+    let paValues = [];
+    let cscMin = 0;
+    let cscMax = 0;
+    
     for (const key in datosFormulario){
         paValues.push(datosFormulario[key].pa);
     }
@@ -15,19 +12,29 @@ function refacturar(datosFormulario, formularioTipo){
     console.log("Pa Values " + paValues);
 
     if (paValues[0] === paValues[1]){
-        paDesde = paValues[2] 
-        paHasta = paValues[2] 
+        cscMin = Math.trunc(paValues[2] * 0.85); 
+        cscMax = Math.trunc(paValues[2] * 1.5); 
     } else {
-        paDesde = paValues[1];
+        cscMin = Math.trunc(paValues[1] * 0.85);
+        cscMax = Math.trunc(paValues[1] * 1.5);
     } 
-    console.log(paDesde)*/
+    console.log("cscMin:" + cscMin);
+    console.log("cscMax: " + cscMax);
+    return {cscMin, cscMax}
+}
+
+function refacturar(datosFormulario, formularioTipo){
+    
+    let importeAnual;       
+   
     fetch('./tarifas.json')
         .then(response => response.json())
         .then(jsonData => {
             
             console.log(jsonData);
             
-            for (const i in jsonData){
+            //for (const i in jsonData){
+            function calcularImporte(i){
                 importeAnual = 0;
                 console.log(jsonData[i].tarifa)
 
@@ -52,54 +59,52 @@ function refacturar(datosFormulario, formularioTipo){
                     let evalle = formularioTipo === 'T3' ? parseFloat(datosFormulario[j].evalle) : 0;
                     let eresto = formularioTipo === 'T3' ? parseFloat(datosFormulario[j].eresto) : 0;                    
                     
-                    let exc = pa - csc;
-                    console.log("Excedente:" + exc);     
+                    let auxExc = pa - csc;
+                    console.log("auxExc:" + auxExc);     
                                         
-                    if (exc > 0) {
-                        exc = formularioTipo === 'T3' ? (exc < 0.5 ? exc * 1.5 : exc * 2) : exc * 1.5; // Calculo de excedente para T2 y T3
+                    if (auxExc > 0) {                       
+                        exc = formularioTipo === 'T3' ? (auxExc < 0.5 * csc ? auxExc * 1.5 : auxExc * 2) : auxExc * 1.5; // Calculo de excedente para T2 y T3
                     } else {
                         exc = 0;
                     }
+                    console.log("excedente:" + exc);
 
                     // Calcular el importe
-                    let importe = $cf + csc * ($csc + exc) + pa * $pa + ent2 * $ent2 + + epta * $epta + evalle * $evalle + eresto * $eresto;                    
+                    let importe = $cf + $csc * (csc + exc) + pa * $pa + ent2 * $ent2 + epta * $epta + evalle * $evalle + eresto * $eresto;                    
                     
-                    console.log(`Fila:${j} = $cf=${$cf} + csc=${csc} * ($csc=${$csc} + exc=${exc}) + pa=${pa} * $pa=${$pa} + ent2=${ent2} * $ent2=${$ent2} + epta=${epta} * $epta=${$epta} + evalle=${evalle} * $evalle=${$evalle} + eresto=${eresto} * $eresto=${$eresto}`);                                                                                   
+                    console.log(`Fila:${j} = $cf=${$cf} + $csc=${$csc} * (csc=${csc} + exc=${exc}) + pa=${pa} * $pa=${$pa} + ent2=${ent2} * $ent2=${$ent2} + epta=${epta} * $epta=${$epta} + evalle=${evalle} * $evalle=${$evalle} + eresto=${eresto} * $eresto=${$eresto}`);                                                                                   
                     console.log("Periodo " + j + " - importe: " + importe); 
                     console.log("////////////");
             
                     importeAnual += importe;
                 }                            
                 
-                console.log("importe Anual " + importeAnual);
-
-                importesReales.push({[jsonData[i].tarifa]:importeAnual});                    
-                console.log("---------------");
+                console.log("importe Anual " + importeAnual); 
+                return importeAnual;                   
                 
-            }                
-            importesReales.forEach(importe =>{
-                console.log(importe)  
-            })
+            }          
+              
+            if (formularioTipo == 'T1'){
+
+            } else if (formularioTipo == 'T2'){
+                return calcularImporte(4);
+                
+            } else if(formularioTipo == 'T3'){
+                return calcularImporte(5);
+                
+            }            
              
         })
         .catch(error =>{
             console.error(error);
-        });
-        
-        //Sweet Alert
-        Swal.fire({
-            title: "Resultado",
-            text: "El resultado es...",
-            imageUrl: "https://unsplash.it/400/200",
-            imageWidth: 400,
-            imageHeight: 200,
-            imageAlt: "Custom image"
-        });
+        }); 
 
+        
 }
 
 function procesarFormulario(formulario, formularioTipo) {
     const datosFormulario = {};
+    let importesLista = [];
 
     const filas = formulario.querySelectorAll('.row');
     for (let i = 1; i < filas.length; i++) {
@@ -118,9 +123,33 @@ function procesarFormulario(formulario, formularioTipo) {
     console.log(datosFormulario);
     // Convertir el objeto a una cadena de texto y mostrarlo en un alert
     //alert(JSON.stringify(datosFormulario));
+
+    const {cscMin, cscMax} = calcularRangoSimulacion(datosFormulario);
     
-    refacturar(datosFormulario , formularioTipo);
+    //Refacturación real
+    let importeAnualReal = refacturar(datosFormulario , formularioTipo);
+    console.log("asiganación de variable " + importeAnualReal);
+
+    importesLista.push({[formularioTipo]:importeAnualReal});                    
+    console.log("---------------");
+   
+    //Refacturación simulada
+
     
+    //Imprimir listado de importes anuales Real y después simulados
+    importesLista.forEach(importe =>{
+        console.log(importe)  
+    })
+    
+    //Sweet Alert
+        /*Swal.fire({
+            title: "Resultado",
+            text: "El resultado es...",
+            imageUrl: "https://unsplash.it/400/200",
+            imageWidth: 400,
+            imageHeight: 200,
+            imageAlt: "Custom image"
+        });*/
 }
 
 document.addEventListener('DOMContentLoaded', function() {
