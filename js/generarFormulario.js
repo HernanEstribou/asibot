@@ -45,8 +45,21 @@ function generarFormulario(tipo, numPeriodos) {
             </div>-->  
         </div>`;
 
+    let datos = [
+        {csc:40, pa:56, ent2:19440},
+        {csc:40, pa:62.40, ent2:21480},
+        {csc:40, pa:65.60, ent2:23920},
+        {csc:40, pa:68.40, ent2:23400},
+        {csc:40, pa:68.80, ent2:16000},
+        {csc:40, pa:18, ent2:5240},
+        {csc:40, pa:15.8, ent2:4280},
+        {csc:40, pa:15.6, ent2:4320},
+        {csc:40, pa:15.6, ent2:4160},
+        {csc:40, pa:15.6, ent2:4200},
+        {csc:40, pa:15.6, ent2:4320}
+    ]
     // Generar los periodos
-    for (let i = 1; i <= numPeriodos; i++) {
+    for (let i = 0; i < numPeriodos; i++) {
         html += `
             <!-- Periodo ${i} -->
             <div class="row">
@@ -60,10 +73,10 @@ function generarFormulario(tipo, numPeriodos) {
                     <input class="form-control" type="text" name="mes" placeholder="MM">
                 </div>-->
                 <div class="col-sm-2 mb-3">
-                    <input class="form-control" type="text" name="csc" placeholder="">
+                    <input class="form-control" type="text" name="csc" placeholder="" value="${datos[i].csc}">                                        
                 </div>
                 <div class="col-sm-2 mb-3">
-                    <input class="form-control" type="text" name="pa" placeholder="">
+                    <input class="form-control" type="text" name="pa" placeholder="" value="${datos[i].pa}">                                        
                 </div>`;
 
         if (tipo === 'T3') {
@@ -80,7 +93,7 @@ function generarFormulario(tipo, numPeriodos) {
         } else if(tipo==='T2') {
         html += `
                 <div class="col-sm-2 mb-3">
-                    <input class="form-control" type="text" name="ent2" placeholder="">
+                    <input class="form-control" type="text" name="ent2" placeholder="" value="${datos[i].ent2}">                                       
                 </div>`;
         }
 
@@ -97,8 +110,8 @@ function generarFormulario(tipo, numPeriodos) {
 }
 
 // Generar los formularios T2 y T3 con 2 periodos cada uno
-const formularioT2HTML = generarFormulario('T2', 3);
-const formularioT3HTML = generarFormulario('T3', 3);
+const formularioT2HTML = generarFormulario('T2', 11);
+const formularioT3HTML = generarFormulario('T3', 11);
 
 // Insertar los formularios en los contenedores correspondientes
 document.getElementById('formulario-t2-container').innerHTML = formularioT2HTML;
