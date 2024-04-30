@@ -209,11 +209,12 @@ function obtenerTarifa(fila, cuadroTarifario){
     
 }
 
-function procesarFormulario(formulario, tarifaOriginal) {
+function procesarFormulario(formulario, tarifaOriginal, empresa, rutaJson) {
     const datosFormulario = {};
     let importesLista = [];
     let importeAnualReal = 0;
-
+    let cuadroTarifario;
+    
     const filas = formulario.querySelectorAll('.row');
     for (let i = 1; i < filas.length; i++) {
         const fila = filas[i];
@@ -228,9 +229,11 @@ function procesarFormulario(formulario, tarifaOriginal) {
     }  
     
     console.log(`Se envió el formulario ${tarifaOriginal}`);
-    console.log(datosFormulario);
-
-    const cuadroTarifario = loadJSONSync('./edesur.json'); 
+    console.log(datosFormulario);  
+        
+    cuadroTarifario = loadJSONSync(rutaJson);     
+    
+    console.log("Empresa seleccionada " + empresa);
     console.log(`Las tarifas son: `);
     console.log(cuadroTarifario);
 
@@ -351,12 +354,32 @@ function procesarFormulario(formulario, tarifaOriginal) {
 //Main
 document.addEventListener('DOMContentLoaded', function() {
     const formularios = document.querySelectorAll('.form-T2, .form-T3');
-
+    const empresas = document.querySelectorAll('.button-edenor, .button-edesur');
+    const rutaEdenor = './edenor.json';
+    const rutaEdesur = './edesur.json'; 
+    
     formularios.forEach(formulario => {
         formulario.addEventListener('submit', function(event) {
             event.preventDefault();
-            let tarifaOriginal = formulario.classList.contains('form-T2') ? 'T2' : 'T3';            
-            procesarFormulario(formulario, tarifaOriginal);            
+            let tarifaOriginal = formulario.classList.contains('form-T2') ? 'T2' : 'T3';
+            
+            let empresa;
+            let rutaJson;
+
+            empresas.forEach(btnEmpresa =>{
+                if (btnEmpresa.classList.contains('selected')){
+                    if (btnEmpresa.classList.contains('button-edenor')){
+                        empresa = 'edenor';
+                        rutaJson = rutaEdenor;
+                    } else if (btnEmpresa.classList.contains('button-edesur')){
+                        empresa = 'edesur';
+                        rutaJson = rutaEdesur;
+                    }
+                    //empresa = btnEmpresa.classList.contains('button-edenor') ? 'edenor' : 'edesur';
+                }
+            });            
+            
+            procesarFormulario(formulario, tarifaOriginal, empresa, rutaJson);            
         });
     });
 });

@@ -9,6 +9,17 @@ li{
     list-style: none;
 }
 
+/*.container-empresas{
+    padding-bottom:3%;
+}*/
+hr{
+    margin-bottom: 1%;
+    margin-top: 1.5%;
+    width: 40%;
+    margin-left: auto; /* Establece el margen izquierdo a auto */
+    margin-right: auto; /* Establece el margen derecho a auto */
+}
+
 .buttons-container{
     text-align: left;
     width: fit-content; /* Ajusta el ancho al contenido */

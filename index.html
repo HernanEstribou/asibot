@@ -14,14 +14,24 @@
 <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
-
-    <h2>Asibot</h2>
-    <p>1 - Seleccione el tipo de factura a cargar T2 o T3</p>
-    <button class="button-t2 btn btn-primary" onclick="selection(this)">T2</button>
-    <button class="button-t3 btn btn-primary" onclick="selection(this)">T3</button>
-
+    
+    <div class="container-empresas">
+        <h2>Asibot</h2>
+        <p>1 - Seleccione la empresa contratada</p>
+        <button class="button-edenor btn btn-primary" onclick="seleccionarEmpresa(this)">EDENOR</button>
+        <button class="button-edesur btn btn-primary" onclick="seleccionarEmpresa(this)">EDESUR</button>
+    </div>
+    
+    <div class="container-tarifas hidden"> 
+        <hr>      
+        <p>2 - Seleccione el tipo de factura a cargar T2 o T3</p>
+        <button class="button-t2 btn btn-primary" onclick="seleccionarTarifa(this)">T2</button>
+        <button class="button-t3 btn btn-primary" onclick="seleccionarTarifa(this)">T3</button>
+    </div>
+    
     <div class="container-t2 hidden">
-        <p>2 - Cargue los datos de las últimas 12 facturas:</p>        
+        <hr>
+        <p>3 - Cargue los datos de las últimas 12 facturas:</p>        
         <div class="buttons-container">
             <a onclick="verFactura('Período', 'Año y Mes')" class="info-icon"><i class="fa-regular fa-circle-question fa-lg"></i></a>            
             <span><span class="campo">Período:</span> Año y Mes en formato AAAAMM</span><br>
@@ -45,6 +55,7 @@
     </div>
 
     <div class="container-t3 hidden">
+        <hr>
         <p>2 - Cargue los datos de las últimas 12 facturas:</p>
         
         <div class="buttons-container">
