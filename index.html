@@ -18,19 +18,26 @@
     <div class="container-empresas">
         <h2>Asibot</h2>
         <p>1 - Seleccione la empresa contratada</p>
-        <button class="button-edenor btn btn-primary" onclick="seleccionarEmpresa(this)">EDENOR</button>
-        <button class="button-edesur btn btn-primary" onclick="seleccionarEmpresa(this)">EDESUR</button>
+        <button class="button-edenor btn btn-primary" onclick="seleccionarEmpresa(this)" value="edenor">EDENOR</button>
+        <button class="button-edesur btn btn-primary" onclick="seleccionarEmpresa(this)" value="edesur">EDESUR</button>
     </div>
     
     <div class="container-tarifas hidden"> 
         <hr>      
         <p>2 - Seleccione el tipo de factura a cargar T2 o T3</p>
-        <button class="button-t2 btn btn-primary" onclick="seleccionarTarifa(this)">T2</button>
-        <button class="button-t3 btn btn-primary" onclick="seleccionarTarifa(this)">T3</button>
+        <button class="button-t2 btn btn-primary" onclick="seleccionarTarifa(this)" value="T2">T2</button>
+        <button class="button-t3 btn btn-primary" onclick="seleccionarTarifa(this)" value="T3">T3</button>
+    </div>
+
+    <div class="container-tension hidden"> 
+        <hr>      
+        <p>3 - Seleccione si tiene Media o Baja tensión</p>
+        <button class="button-BT btn btn-primary" onclick="seleccionarTension(this)" value="BT">Baja Tensión</button>
+        <button class="button-MT btn btn-primary" onclick="seleccionarTension(this)" value="MT">Media Tensión</button>
     </div>
     
     <div class="container-t2 hidden">
-        <hr>
+        <!--<hr>
         <p>3 - Cargue los datos de las últimas 12 facturas:</p>        
         <div class="buttons-container">
             <a onclick="verFactura('Período', 'Año y Mes')" class="info-icon"><i class="fa-regular fa-circle-question fa-lg"></i></a>            
@@ -41,7 +48,7 @@
             <span><span class="campo">PA</span> : Potencia adquirida</span><br>
             <a onclick="verFactura('EnT2','Energía T2')" class="info-icon"><i class="fa-regular fa-circle-question fa-lg"></i></a>
             <span><span class="campo">EnT2</span>: Energía T2</span><br> 
-        </div>                    
+        </div>-->                    
         <div class="container mt-4">
             <div class="card border-secondary">
                 <div class="card-header">Datos a ingresar de FACTURAS T2</div>
@@ -55,8 +62,8 @@
     </div>
 
     <div class="container-t3 hidden">
-        <hr>
-        <p>2 - Cargue los datos de las últimas 12 facturas:</p>
+        <!--<hr>
+        <p>4 - Cargue los datos de las últimas 12 facturas:</p>
         
         <div class="buttons-container">
             <a onclick="verFactura('Período','Año y Mes')" class="info-icon"><i class="fa-regular fa-circle-question fa-lg"></i></a>
@@ -71,7 +78,7 @@
             <span><span class="campo">EValle:</span> Energía en Valle</span><br>
             <a onclick="verFactura('EResto','Energía en Resto')" class="info-icon"><i class="fa-regular fa-circle-question fa-lg"></i></a>
             <span><span class="campo">EResto:</span> Energía en Resto</span><br> 
-        </div>      
+        </div>-->      
                
         
         <div class="container mt-4">
@@ -88,7 +95,7 @@
     <script src="./js/generarFormulario.js"></script>
     <script src="./js/mostrarOcultarFormulario.js"></script>  
     <!--<script src="./js/procesarFormulario.js"></script>-->
-    <script src="./js/procesarFormulario5.js"></script>  
+    <script src="./js/procesarFormulario5.js" type="module"></script>  
     
     <!--CDN Bootstrap-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>

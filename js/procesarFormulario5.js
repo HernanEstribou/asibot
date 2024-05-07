@@ -1,60 +1,5 @@
-function loadJSONSync(filename) {
-    const request = new XMLHttpRequest();
-    request.open('GET', filename, false); // El tercer parámetro indica que la solicitud es sincrónica
-    request.send(null);
+import { loadJSONSync, formatearCSV, descargarCSV } from './manejoDeArchivos.js';
 
-    if (request.status === 200) {
-        return JSON.parse(request.responseText);
-    } else {
-        throw new Error(`Failed to load JSON file ${filename}: ${request.status}`);
-    }
-}
-
-function formatearCSV(datosPeriodos){
-    // Extraer las claves del primer objeto en la matriz datosPeriodos
-    let columnasCSV = Object.keys(datosPeriodos[0]);    
-
-    // Agregar nombres de las columnas como la primera fila del contenido del CSV
-    let contenidoCSV = columnasCSV.join(",") + "\n";    
-
-    // Agregar el contenido de los datos de los periodos
-    contenidoCSV += datosPeriodos.map(periodo => 
-        columnasCSV.map(columna => {
-            // Formatear números con dos decimales
-            return typeof periodo[columna] === 'number' ? formatearNumero(periodo[columna]) : periodo[columna];
-        }).join(",")
-    ).join("\n");
-    return contenidoCSV;
-}
-
-function descargarCSV(contenidoCSV, nombreArchivo) {
-    const blob = new Blob([contenidoCSV], { type: "text/csv;charset=utf-8;" });
-
-    if (navigator.msSaveBlob) {
-        // Para IE 10 y versiones anteriores
-        navigator.msSaveBlob(blob, nombreArchivo);
-    } else {
-        const enlace = document.createElement("a");
-        if (enlace.download !== undefined) {
-            // Crear un enlace y descargar
-            const url = URL.createObjectURL(blob);
-            enlace.setAttribute("href", url);
-            enlace.setAttribute("download", nombreArchivo);
-            enlace.style.visibility = "hidden";
-            document.body.appendChild(enlace);
-            enlace.click();
-            document.body.removeChild(enlace);
-        }
-    }
-}
-
-// Función para formatear números con dos decimales utilizando Math.round()
-function formatearNumero(numero) {
-    // Redondear el número a dos decimales
-    let numeroRedondeado = Math.round(numero * 100) / 100;
-    // Devolver el número redondeado como string
-    return numeroRedondeado.toString();
-}
 
 function calcularRangoSimulacion(datosFormulario){
     let paValues = [];
@@ -132,7 +77,8 @@ function penalidad(pa, csc, formularioTipo){
 }
 
 function refacturar(fila, tarifa, tarifaOriginal, calculoTipo){
-   
+    console.log("Refacturar tarifa:");
+       
     let $cf = parseFloat(tarifa.cf);
     let $csc = parseFloat(tarifa.csc);
     let $pa = parseFloat(tarifa.pa);
@@ -141,6 +87,7 @@ function refacturar(fila, tarifa, tarifaOriginal, calculoTipo){
     let $evalle = parseFloat(tarifa.evalle);
     let $eresto = parseFloat(tarifa.eresto);
 
+    let cf;
     let csc;
     let pa;
     let ent2;
@@ -167,6 +114,7 @@ function refacturar(fila, tarifa, tarifaOriginal, calculoTipo){
         exc = penalidad(pa, csc, tarifaOriginal);
 
     } else if (calculoTipo == 'simulado'){
+        
         cf = fila.cf;
         csc = fila.csc;
         pa = fila.pa;
@@ -185,7 +133,7 @@ function refacturar(fila, tarifa, tarifaOriginal, calculoTipo){
 }
 
 //devuelve un objeto con los valores de tarifa que le corresponden a la fila que se le pasa de parámetro
-function obtenerTarifa(fila, cuadroTarifario){
+function obtenerTarifa(fila, cuadroTarifario, tension){
 
     let ent2 = parseFloat(fila.ent2);
     let csc = parseFloat(fila.csc);
@@ -200,22 +148,30 @@ function obtenerTarifa(fila, cuadroTarifario){
         tarifaTipo = "T2"                                             //T2
     }                         
     else {        
-        tarifaTipo = "T3BT"                                             //T3
+        //tarifaTipo = "T3BT"                                             //T3        
+        tarifaTipo = "T3"
     }
     
-    for (const i in cuadroTarifario){
+    /*for (const i in cuadroTarifario){
         if (cuadroTarifario[i].tarifa == tarifaTipo) return cuadroTarifario[i];
+    }*/
+
+    for (const i in cuadroTarifario){
+        if (cuadroTarifario[i].tarifa == tarifaTipo && tarifaTipo != "T3") return cuadroTarifario[i];
+
+        else if (cuadroTarifario[i].tarifa == tarifaTipo && tarifaTipo == "T3"){
+            if (cuadroTarifario[i].tension == tension){                
+                return cuadroTarifario[i];
+            } 
+        }
     }
     
 }
 
-function procesarFormulario(formulario, tarifaOriginal, empresa, rutaJson) {
-    const datosFormulario = {};
-    let importesLista = [];
-    let importeAnualReal = 0;
-    let cuadroTarifario;
-    
+function recuperarDatosFormulario(formulario){
+    const diccionario = {}
     const filas = formulario.querySelectorAll('.row');
+
     for (let i = 1; i < filas.length; i++) {
         const fila = filas[i];
         const campos = fila.querySelectorAll('input');
@@ -225,11 +181,20 @@ function procesarFormulario(formulario, tarifaOriginal, empresa, rutaJson) {
             objetoCampos[campo.name] = campo.value;
         });
 
-        datosFormulario[i] = objetoCampos;
-    }  
+        diccionario[i] = objetoCampos;
+    }     
+        
+    return diccionario;
+}
+
+function procesarFormulario(empresa, tarifaOriginal, tension, formulario, rutaJson) {    
     
+    let importeAnualReal = 0;
+    let cuadroTarifario;
+    
+    const datosFormulario = recuperarDatosFormulario(formulario);
     console.log(`Se envió el formulario ${tarifaOriginal}`);
-    console.log(datosFormulario);  
+    console.log(datosFormulario); 
         
     cuadroTarifario = loadJSONSync(rutaJson);     
     
@@ -237,11 +202,15 @@ function procesarFormulario(formulario, tarifaOriginal, empresa, rutaJson) {
     console.log(`Las tarifas son: `);
     console.log(cuadroTarifario);
 
+    //----------------------- 
+    //Calculo de importe Real
+    //-----------------------
+
     for (const i in datosFormulario){
         console.log("Período " + i);
-        let tarifaFila = obtenerTarifa(datosFormulario[i], cuadroTarifario);        
-        //console.log("Fila de la tarifa");
-        //console.log(tarifaFila);
+        let tarifaFila = obtenerTarifa(datosFormulario[i], cuadroTarifario, tension);        
+        console.log("Fila de la tarifa");
+        console.log(tarifaFila);
 
         let importe = refacturar(datosFormulario[i], tarifaFila, tarifaOriginal, "real");
          
@@ -277,10 +246,14 @@ function procesarFormulario(formulario, tarifaOriginal, empresa, rutaJson) {
         // Hacer una copia de datosFormulario en cada iteración para poder sobreescribirla porque javascript no deja modificar objeto original
         let formularioSimulado = JSON.parse(JSON.stringify(datosFormulario));
         let tarifaSimulada;
+        
+        console.log("csc simulado: " + csc);
+        console.log("************************");
 
         for (let fila in formularioSimulado){           
             
             console.log("Período simulado " + fila);
+            //console.log(formularioSimulado[fila])            
 
             let filaNueva = completarCampos(
                 parseFloat(formularioSimulado[fila].cf),
@@ -300,25 +273,28 @@ function procesarFormulario(formulario, tarifaOriginal, empresa, rutaJson) {
             });
             
             //console.log("Formulario simulado de fila");
-            //console.log(formularioSimulado[fila]);            
+            //console.log(formularioSimulado[fila]);                       
             
-            tarifaSimulada = obtenerTarifa(formularioSimulado[fila], cuadroTarifario);        
+            tarifaSimulada = obtenerTarifa(formularioSimulado[fila], cuadroTarifario, tension);        
             //console.log("Fila de la tarifa simulada");
             //console.log(tarifaSimulada);
 
             let importeSimulado = refacturar(formularioSimulado[fila], tarifaSimulada, "", "simulado");
            
             datosPeriodos.push({
+                ["empresa"]: empresa,
+                ["tarifa"]:tarifaSimulada.tarifa,
+                ["tension"]: tension,
+                ["periodo"]: fila,
                 ["csc"]:formularioSimulado[fila].csc,
                 ["pa"]:formularioSimulado[fila].pa,
                 ["penalidad"]: formularioSimulado[fila].exc,
                 ["ent2"]:formularioSimulado[fila].ent2,
                 ["epta"]:formularioSimulado[fila].epta,
                 ["evalle"]:formularioSimulado[fila].evalle,
-                ["eresto"]:formularioSimulado[fila].eresto,                
-                ["tarifa"]:tarifaSimulada.tarifa,
+                ["eresto"]:formularioSimulado[fila].eresto,               
                 ["$cf"]:tarifaSimulada.cf,
-                ["$csc"]:tarifaSimulada.cf,
+                ["$csc"]:tarifaSimulada.csc,
                 ["$pa"]:tarifaSimulada.pa,
                 ["$ent2"]:tarifaSimulada.ent2,
                 ["$epta"]:tarifaSimulada.epta,
@@ -351,35 +327,41 @@ function procesarFormulario(formulario, tarifaOriginal, empresa, rutaJson) {
     descargarCSV(contenidoCSV, "datos_periodos.csv");
 }
 
+function parsearBotonSeleccionado(buttons){
+    let selectedButton
+    buttons.forEach(btn =>{
+        if (btn.classList.contains('selected')){                    
+            selectedButton = btn.value;                        
+        }
+    });
+    return selectedButton;
+}
+
 //Main
 document.addEventListener('DOMContentLoaded', function() {
-    const formularios = document.querySelectorAll('.form-T2, .form-T3');
+    
     const empresas = document.querySelectorAll('.button-edenor, .button-edesur');
-    const rutaEdenor = './edenor.json';
-    const rutaEdesur = './edesur.json'; 
+    const tarifas = document.querySelectorAll('.button-t2, .button-t3');
+    const tensiones = document.querySelectorAll('.button-BT, .button-MT');
+    const formularios = document.querySelectorAll('.form-T2, .form-T3');     
     
     formularios.forEach(formulario => {
         formulario.addEventListener('submit', function(event) {
-            event.preventDefault();
-            let tarifaOriginal = formulario.classList.contains('form-T2') ? 'T2' : 'T3';
+            event.preventDefault();            
             
-            let empresa;
-            let rutaJson;
+            let empresa = parsearBotonSeleccionado(empresas);     
+            let tarifaOriginal = parsearBotonSeleccionado(tarifas);                  
+            let tension;
 
-            empresas.forEach(btnEmpresa =>{
-                if (btnEmpresa.classList.contains('selected')){
-                    if (btnEmpresa.classList.contains('button-edenor')){
-                        empresa = 'edenor';
-                        rutaJson = rutaEdenor;
-                    } else if (btnEmpresa.classList.contains('button-edesur')){
-                        empresa = 'edesur';
-                        rutaJson = rutaEdesur;
-                    }
-                    //empresa = btnEmpresa.classList.contains('button-edenor') ? 'edenor' : 'edesur';
-                }
-            });            
+            if (tarifaOriginal === 'T2'){
+                tension = 'BT';
+            } else if (tarifaOriginal =='T3'){
+                tension = parsearBotonSeleccionado(tensiones);                
+            } 
+           
+            let rutaJson = `./${empresa}.json`;
             
-            procesarFormulario(formulario, tarifaOriginal, empresa, rutaJson);            
+            procesarFormulario(empresa, tarifaOriginal, tension, formulario, rutaJson);            
         });
     });
 });
