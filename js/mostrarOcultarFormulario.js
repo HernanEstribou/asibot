@@ -4,16 +4,18 @@ function seleccionarEmpresa(selectedButton){
     let edesur = document.querySelector(".button-edesur"); 
 
     if (selectedButton.classList.contains("button-edenor")) {
-        edenor.classList.add("selected");
+        //edenor.classList.add("selected");
         if (edesur.classList.contains("selected")){
             edesur.classList.remove("selected");
         }
     } else if(selectedButton.classList.contains("button-edesur")){
-        edesur.classList.add("selected");
+        //edesur.classList.add("selected");
         if (edenor.classList.contains("selected")){
             edenor.classList.remove("selected");
         }
     }
+
+    selectedButton.classList.add("selected");
 
     containerTarifas.classList.add("show");
 }
@@ -22,15 +24,21 @@ function seleccionarTarifa(selectedButton){
     
     let containerT2 = document.querySelector(".container-t2");
     let containerT3 = document.querySelector(".container-t3");
-    let containerTension = document.querySelector(".container-tension"); 
+    let containerTension = document.querySelector(".container-tension");
+    let containerPeaje = document.querySelector(".container-peaje"); 
     let buttonT2 = document.querySelector(".button-t2");
     let buttonT3 = document.querySelector(".button-t3");
     let buttonBT = document.querySelector(".button-BT");
     let buttonMT = document.querySelector(".button-MT");
+    let buttonP = document.querySelector(".button-P");
+    let buttonNP = document.querySelector(".button-NP");
 
     if (selectedButton.classList.contains("button-t2")) {
-        containerT2.classList.remove("hidden");
-        containerT2.classList.add("show");
+        //containerT2.classList.remove("hidden");
+        //containerT2.classList.add("show");
+        containerPeaje.classList.remove("hidden");
+        containerPeaje.classList.add("show");
+
         containerTension.classList.remove("show");
         containerTension.classList.add("hidden");
 
@@ -41,6 +49,7 @@ function seleccionarTarifa(selectedButton){
             buttonT3.classList.remove("selected");
         }
 
+        //Remuevo la selección de Tensión
         if(buttonBT.classList.contains("selected")){
             buttonBT.classList.remove("selected");
         } else if( buttonMT.classList.contains("selected")){
@@ -51,7 +60,9 @@ function seleccionarTarifa(selectedButton){
     } else if (selectedButton.classList.contains("button-t3")) {
         //containerT3.classList.remove("hidden");
         //containerT3.classList.add("show");
-
+        containerPeaje.classList.remove("show");
+        containerPeaje.classList.add("hidden");
+                
         containerTension.classList.remove("hidden");
         containerTension.classList.add("show");
         containerT2.classList.remove("show");
@@ -63,6 +74,13 @@ function seleccionarTarifa(selectedButton){
         selectedButton.classList.add("selected");
         
     }
+
+    //Remuevo la selección de Peaje
+    if(buttonP.classList.contains("selected")){
+        buttonP.classList.remove("selected");
+    } else if( buttonNP.classList.contains("selected")){
+        buttonNP.classList.remove("selected");
+    }
     
 }
 
@@ -70,6 +88,7 @@ function seleccionarTarifa(selectedButton){
 
 function seleccionarTension(selectedButton){
     let containerT3 = document.querySelector(".container-t3");
+    let containerPeaje = document.querySelector(".container-peaje");
     let buttonBT = document.querySelector(".button-BT");
     let buttonMT = document.querySelector(".button-MT");
 
@@ -78,17 +97,51 @@ function seleccionarTension(selectedButton){
 
         if (buttonMT.classList.contains("selected")) {
             buttonMT.classList.remove("selected");
-        }
-        selectedButton.classList.add("selected");
+        }        
 
     } else if (selectedButton.classList.contains("button-MT")){
         if (buttonBT.classList.contains("selected")) {
             buttonBT.classList.remove("selected");
-        }
-        selectedButton.classList.add("selected");
+        }        
     }
 
-    containerT3.classList.remove("hidden");
-    containerT3.classList.add("show");    
+    selectedButton.classList.add("selected");
+
+    //containerT3.classList.remove("hidden");
+    //containerT3.classList.add("show"); 
+    containerPeaje.classList.remove("hidden");
+    //containerPeaje.classList.add("show");
     
+}
+
+function seleccionarPeaje(selectedButton){
+    let containerT2 = document.querySelector(".container-t2");
+    let containerT3 = document.querySelector(".container-t3");
+    let buttonP = document.querySelector(".button-P");
+    let buttonNP = document.querySelector(".button-NP");
+    let buttonT2 = document.querySelector(".button-t2");
+    let buttonT3 = document.querySelector(".button-t3");    
+
+    if (selectedButton.classList.contains("button-P")) {        
+
+        if (buttonNP.classList.contains("selected")) {
+            buttonNP.classList.remove("selected");
+        }        
+
+    } else if (selectedButton.classList.contains("button-NP")){
+        if (buttonP.classList.contains("selected")) {
+            buttonP.classList.remove("selected");
+        }        
+    }   
+    
+    if (buttonT2.classList.contains("selected")){
+        containerT2.classList.remove("hidden");
+        containerT2.classList.add("show"); 
+    } else if (buttonT3.classList.contains("selected")){
+        containerT3.classList.remove("hidden");
+        containerT3.classList.add("show");  
+    }
+
+    selectedButton.classList.add("selected");
+       
 }

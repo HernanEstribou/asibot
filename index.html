@@ -17,23 +17,56 @@
     
     <div class="container-empresas">
         <h2>Asibot</h2>
-        <p>1 - Seleccione la empresa contratada</p>
+        <p>Seleccione la empresa contratada</p>
         <button class="button-edenor btn btn-primary" onclick="seleccionarEmpresa(this)" value="edenor">EDENOR</button>
         <button class="button-edesur btn btn-primary" onclick="seleccionarEmpresa(this)" value="edesur">EDESUR</button>
     </div>
     
     <div class="container-tarifas hidden"> 
         <hr>      
-        <p>2 - Seleccione el tipo de factura a cargar T2 o T3</p>
+        <p>Seleccione el tipo de factura a cargar T1, T2 o T3</p>
+        <!--<button class="button-t1 btn btn-primary" onclick="seleccionarTarifa(this)" value="T1">T1</button>-->
         <button class="button-t2 btn btn-primary" onclick="seleccionarTarifa(this)" value="T2">T2</button>
         <button class="button-t3 btn btn-primary" onclick="seleccionarTarifa(this)" value="T3">T3</button>
     </div>
 
     <div class="container-tension hidden"> 
         <hr>      
-        <p>3 - Seleccione si tiene Media o Baja tensión</p>
+        <p>Seleccione si tiene Media o Baja tensión</p>
         <button class="button-BT btn btn-primary" onclick="seleccionarTension(this)" value="BT">Baja Tensión</button>
         <button class="button-MT btn btn-primary" onclick="seleccionarTension(this)" value="MT">Media Tensión</button>
+    </div>
+
+    <div class="container-peaje hidden"> 
+        <hr>      
+        <p>Seleccione si su factura es con Peaje o sin Peaje</p>
+        <button class="button-P btn btn-primary" onclick="seleccionarPeaje(this)" value="SI">Peaje</button>
+        <button class="button-NP btn btn-primary" onclick="seleccionarPeaje(this)" value="NO">Sin Peaje</button>
+    </div>
+
+    <div class="container-t1 hidden">
+        <!--<hr>
+        <p>3 - Cargue los datos de las últimas 12 facturas:</p>        
+        <div class="buttons-container">
+            <a onclick="verFactura('Período', 'Año y Mes')" class="info-icon"><i class="fa-regular fa-circle-question fa-lg"></i></a>            
+            <span><span class="campo">Período:</span> Año y Mes en formato AAAAMM</span><br>
+            <a onclick="verFactura('CSC','Capacidad de suministro contratada')" class="info-icon"><i class="fa-regular fa-circle-question fa-lg"></i></a>
+            <span><span class="campo">CSC:</span> Capacidad de suministro contratada</span><br>
+            <a onclick="verFactura('PA','Potencia adquirida')" class="info-icon"><i class="fa-regular fa-circle-question fa-lg"></i></a>
+            <span><span class="campo">PA</span> : Potencia adquirida</span><br>
+            <a onclick="verFactura('EnT2','Energía T2')" class="info-icon"><i class="fa-regular fa-circle-question fa-lg"></i></a>
+            <span><span class="campo">EnT2</span>: Energía T2</span><br> 
+        </div>-->                    
+        <div class="container mt-4">
+            <div class="card border-secondary">
+                <div class="card-header">Datos a ingresar de FACTURAS T1</div>
+                    <div class="card-body" id="formulario-t1-container">
+                        <!-- Acá va el formulario T1 -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        
     </div>
     
     <div class="container-t2 hidden">

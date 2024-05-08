@@ -77,8 +77,7 @@ function penalidad(pa, csc, formularioTipo){
 }
 
 function refacturar(fila, tarifa, tarifaOriginal, calculoTipo){
-    console.log("Refacturar tarifa:");
-       
+           
     let $cf = parseFloat(tarifa.cf);
     let $csc = parseFloat(tarifa.csc);
     let $pa = parseFloat(tarifa.pa);
@@ -133,7 +132,7 @@ function refacturar(fila, tarifa, tarifaOriginal, calculoTipo){
 }
 
 //devuelve un objeto con los valores de tarifa que le corresponden a la fila que se le pasa de parámetro
-function obtenerTarifa(fila, cuadroTarifario, tension){
+function obtenerTarifa(fila, cuadroTarifario, tension, peaje){
 
     let ent2 = parseFloat(fila.ent2);
     let csc = parseFloat(fila.csc);
@@ -156,7 +155,7 @@ function obtenerTarifa(fila, cuadroTarifario, tension){
         if (cuadroTarifario[i].tarifa == tarifaTipo) return cuadroTarifario[i];
     }*/
 
-    for (const i in cuadroTarifario){
+    /*for (const i in cuadroTarifario){
         if (cuadroTarifario[i].tarifa == tarifaTipo && tarifaTipo != "T3") return cuadroTarifario[i];
 
         else if (cuadroTarifario[i].tarifa == tarifaTipo && tarifaTipo == "T3"){
@@ -164,7 +163,19 @@ function obtenerTarifa(fila, cuadroTarifario, tension){
                 return cuadroTarifario[i];
             } 
         }
-    }
+    }*/
+    
+    for (const i in cuadroTarifario){
+        if (tarifaTipo == "T2" && cuadroTarifario[i].tarifa == tarifaTipo ) {            
+            if(cuadroTarifario[i].peaje == peaje)  return cuadroTarifario[i];                   
+        
+        } else if (tarifaTipo == "T3" && cuadroTarifario[i].tarifa == tarifaTipo){            
+            if (cuadroTarifario[i].tension == tension && cuadroTarifario[i].peaje == peaje) return cuadroTarifario[i];
+
+        } else if (tarifaTipo != "T2" && tarifaTipo !="T3" && cuadroTarifario[i].tarifa == tarifaTipo){            
+            return cuadroTarifario[i];
+        }
+    }    
     
 }
 
@@ -187,7 +198,7 @@ function recuperarDatosFormulario(formulario){
     return diccionario;
 }
 
-function procesarFormulario(empresa, tarifaOriginal, tension, formulario, rutaJson) {    
+function procesarFormulario(empresa, tarifaOriginal, tension, peaje, formulario, rutaJson) {    
     
     let importeAnualReal = 0;
     let cuadroTarifario;
@@ -208,7 +219,7 @@ function procesarFormulario(empresa, tarifaOriginal, tension, formulario, rutaJs
 
     for (const i in datosFormulario){
         console.log("Período " + i);
-        let tarifaFila = obtenerTarifa(datosFormulario[i], cuadroTarifario, tension);        
+        let tarifaFila = obtenerTarifa(datosFormulario[i], cuadroTarifario, tension, peaje);        
         console.log("Fila de la tarifa");
         console.log(tarifaFila);
 
@@ -275,9 +286,9 @@ function procesarFormulario(empresa, tarifaOriginal, tension, formulario, rutaJs
             //console.log("Formulario simulado de fila");
             //console.log(formularioSimulado[fila]);                       
             
-            tarifaSimulada = obtenerTarifa(formularioSimulado[fila], cuadroTarifario, tension);        
-            //console.log("Fila de la tarifa simulada");
-            //console.log(tarifaSimulada);
+            tarifaSimulada = obtenerTarifa(formularioSimulado[fila], cuadroTarifario, tension, peaje);        
+            console.log("Fila de la tarifa simulada");
+            console.log(tarifaSimulada);
 
             let importeSimulado = refacturar(formularioSimulado[fila], tarifaSimulada, "", "simulado");
            
@@ -343,6 +354,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const empresas = document.querySelectorAll('.button-edenor, .button-edesur');
     const tarifas = document.querySelectorAll('.button-t2, .button-t3');
     const tensiones = document.querySelectorAll('.button-BT, .button-MT');
+    const peajes = document.querySelectorAll('.button-P, .button-NP');
     const formularios = document.querySelectorAll('.form-T2, .form-T3');     
     
     formularios.forEach(formulario => {
@@ -352,7 +364,8 @@ document.addEventListener('DOMContentLoaded', function() {
             let empresa = parsearBotonSeleccionado(empresas);     
             let tarifaOriginal = parsearBotonSeleccionado(tarifas);                  
             let tension;
-
+            let peaje = parsearBotonSeleccionado(peajes);
+            
             if (tarifaOriginal === 'T2'){
                 tension = 'BT';
             } else if (tarifaOriginal =='T3'){
@@ -361,7 +374,7 @@ document.addEventListener('DOMContentLoaded', function() {
            
             let rutaJson = `./${empresa}.json`;
             
-            procesarFormulario(empresa, tarifaOriginal, tension, formulario, rutaJson);            
+            procesarFormulario(empresa, tarifaOriginal, tension, peaje, formulario, rutaJson);            
         });
     });
 });
