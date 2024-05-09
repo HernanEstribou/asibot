@@ -1,26 +1,39 @@
 import { loadJSONSync, formatearCSV, descargarCSV } from './manejoDeArchivos.js';
 
 
-function calcularRangoSimulacion(datosFormulario){
-    let paValues = [];
+function calcularRangoSimulacion(datosFormulario, tarifaOriginal){
+    let values = [];
     let cscMin = 0;
     let cscMax = 0;
+    let limiteInferior = 0.85;
+    let limiteSuperior = 1.5;
+
+    console.log("Tarifa Original en calcularRangosSimulacion: " + tarifaOriginal);
     
     for (const key in datosFormulario){
-        paValues.push(datosFormulario[key].pa);
+
+        if (tarifaOriginal === 'T1') values.push(datosFormulario[key].ent2);
+        else values.push(datosFormulario[key].pa);
     }
 
     // Ordenar de mayor a menor
-    paValues.sort((a,b) =>b - a);
-    //console.log("Pa Values " + paValues);
+    values.sort((a,b) =>b - a);    
+    
+    if (tarifaOriginal === 'T1'){
+        cscMin = Math.trunc(values[0] / 720);
+        cscMax = 49;
+        
+    } else if((tarifaOriginal === 'T2') || (tarifaOriginal === 'T3')) {
 
-    if (paValues[0] === paValues[1]){
-        cscMin = Math.trunc(paValues[2] * 0.85); 
-        cscMax = Math.trunc(paValues[2] * 1.5); 
-    } else {
-        cscMin = Math.trunc(paValues[1] * 0.85);
-        cscMax = Math.trunc(paValues[1] * 1.5);
-    } 
+        if (values[0] === values[1]){
+            cscMin = Math.trunc(values[2] * limiteInferior); 
+            cscMax = Math.trunc(values[2] * limiteSuperior); 
+        } else {
+            cscMin = Math.trunc(values[1] * limiteInferior);
+            cscMax = Math.trunc(values[1] * limiteSuperior);
+        }
+    
+    }
     console.log("cscMin:" + cscMin);
     console.log("cscMax: " + cscMax);
     return {cscMin, cscMax}
@@ -40,6 +53,9 @@ function completarCampos(cf,csc,pa,exc,ent2,epta,evalle,eresto,cscNuevo,tarifaOr
             exc = penalidad(pa, cscNuevo, 'T2');
             ent2 = epta + evalle + eresto;
             return [1,cscNuevo,pa,exc,ent2,0,0,0]
+        } else if (tarifaOriginal === 'T1'){ //Simulando T2 cuando ingresan T1
+            exc=0;
+            return [1,cscNuevo,cscNuevo,exc,ent2,0,0,0];
         }
     }
                      
@@ -94,12 +110,15 @@ function refacturar(fila, tarifa, tarifaOriginal, calculoTipo){
     let evalle;
     let eresto;
     let exc;
+
+    //console.log("Fila del formulario a multiplicar:");
+    //console.log(fila);    
   
     if (calculoTipo == 'real'){
 
         csc = parseFloat(fila.csc);
         pa = parseFloat(fila.pa);
-        if (tarifaOriginal == 'T2'){                       
+        if (tarifaOriginal == 'T1' || tarifaOriginal == 'T2'){                       
             ent2 = parseFloat(fila.ent2);  
             epta = 0;
             evalle = 0;
@@ -136,6 +155,7 @@ function obtenerTarifa(fila, cuadroTarifario, tension, peaje){
 
     let ent2 = parseFloat(fila.ent2);
     let csc = parseFloat(fila.csc);
+    
     let tarifaTipo;
            
     if (csc < 10){
@@ -149,12 +169,12 @@ function obtenerTarifa(fila, cuadroTarifario, tension, peaje){
     else {        
         //tarifaTipo = "T3BT"                                             //T3        
         tarifaTipo = "T3"
-    }
+    }    
     
     /*for (const i in cuadroTarifario){
         if (cuadroTarifario[i].tarifa == tarifaTipo) return cuadroTarifario[i];
     }*/
-
+        
     /*for (const i in cuadroTarifario){
         if (cuadroTarifario[i].tarifa == tarifaTipo && tarifaTipo != "T3") return cuadroTarifario[i];
 
@@ -163,7 +183,8 @@ function obtenerTarifa(fila, cuadroTarifario, tension, peaje){
                 return cuadroTarifario[i];
             } 
         }
-    }*/
+    } */
+    
     
     for (const i in cuadroTarifario){
         if (tarifaTipo == "T2" && cuadroTarifario[i].tarifa == tarifaTipo ) {            
@@ -198,6 +219,7 @@ function recuperarDatosFormulario(formulario){
     return diccionario;
 }
 
+
 function procesarFormulario(empresa, tarifaOriginal, tension, peaje, formulario, rutaJson) {    
     
     let importeAnualReal = 0;
@@ -205,13 +227,14 @@ function procesarFormulario(empresa, tarifaOriginal, tension, peaje, formulario,
     
     const datosFormulario = recuperarDatosFormulario(formulario);
     console.log(`Se envió el formulario ${tarifaOriginal}`);
-    console.log(datosFormulario); 
-        
+    console.log(datosFormulario);
+                
     cuadroTarifario = loadJSONSync(rutaJson);     
     
     console.log("Empresa seleccionada " + empresa);
     console.log(`Las tarifas son: `);
     console.log(cuadroTarifario);
+    
 
     //----------------------- 
     //Calculo de importe Real
@@ -220,8 +243,8 @@ function procesarFormulario(empresa, tarifaOriginal, tension, peaje, formulario,
     for (const i in datosFormulario){
         console.log("Período " + i);
         let tarifaFila = obtenerTarifa(datosFormulario[i], cuadroTarifario, tension, peaje);        
-        console.log("Fila de la tarifa");
-        console.log(tarifaFila);
+        //console.log("Fila de la tarifa");
+        //console.log(tarifaFila);
 
         let importe = refacturar(datosFormulario[i], tarifaFila, tarifaOriginal, "real");
          
@@ -242,7 +265,7 @@ function procesarFormulario(empresa, tarifaOriginal, tension, peaje, formulario,
     //-------------- 
     //Simulación
     //---------------
-    const {cscMin, cscMax} = calcularRangoSimulacion(datosFormulario);
+    const {cscMin, cscMax} = calcularRangoSimulacion(datosFormulario, tarifaOriginal);
 
     // Definir las claves del objeto
     const campos = ['cf', 'csc', 'pa', 'exc', 'ent2', 'epta', 'evalle', 'eresto'];
@@ -264,6 +287,7 @@ function procesarFormulario(empresa, tarifaOriginal, tension, peaje, formulario,
         for (let fila in formularioSimulado){           
             
             console.log("Período simulado " + fila);
+            //console.log("Fila del formulario original");
             //console.log(formularioSimulado[fila])            
 
             let filaNueva = completarCampos(
@@ -278,17 +302,15 @@ function procesarFormulario(empresa, tarifaOriginal, tension, peaje, formulario,
                 csc,
                 tarifaOriginal
             )
-            
+                        
             campos.forEach((campo, i) => {
                 formularioSimulado[fila][campo] = filaNueva[i];
             });
-            
-            //console.log("Formulario simulado de fila");
-            //console.log(formularioSimulado[fila]);                       
+                                             
             
             tarifaSimulada = obtenerTarifa(formularioSimulado[fila], cuadroTarifario, tension, peaje);        
-            console.log("Fila de la tarifa simulada");
-            console.log(tarifaSimulada);
+            //console.log("Fila de la tarifa simulada");
+            //console.log(tarifaSimulada);
 
             let importeSimulado = refacturar(formularioSimulado[fila], tarifaSimulada, "", "simulado");
            
@@ -352,27 +374,30 @@ function parsearBotonSeleccionado(buttons){
 document.addEventListener('DOMContentLoaded', function() {
     
     const empresas = document.querySelectorAll('.button-edenor, .button-edesur');
-    const tarifas = document.querySelectorAll('.button-t2, .button-t3');
+    const tarifas = document.querySelectorAll('.button-t1, .button-t2, .button-t3');
     const tensiones = document.querySelectorAll('.button-BT, .button-MT');
     const peajes = document.querySelectorAll('.button-P, .button-NP');
-    const formularios = document.querySelectorAll('.form-T2, .form-T3');     
+    const formularios = document.querySelectorAll('.form-T1, .form-T2, .form-T3');     
     
     formularios.forEach(formulario => {
         formulario.addEventListener('submit', function(event) {
-            event.preventDefault();            
-            
+            event.preventDefault();           
+                        
             let empresa = parsearBotonSeleccionado(empresas);     
             let tarifaOriginal = parsearBotonSeleccionado(tarifas);                  
-            let tension;
-            let peaje = parsearBotonSeleccionado(peajes);
-            
-            if (tarifaOriginal === 'T2'){
+            let tension = parsearBotonSeleccionado(tensiones);
+            let peaje = parsearBotonSeleccionado(peajes);                       
+
+            if (tarifaOriginal === 'T1'){
                 tension = 'BT';
-            } else if (tarifaOriginal =='T3'){
-                tension = parsearBotonSeleccionado(tensiones);                
-            } 
+                peaje = 'NO';
+            }
+
+            if (tarifaOriginal === 'T2'){
+                tension = 'BT';            
+            }
            
-            let rutaJson = `./${empresa}.json`;
+            let rutaJson = `./${empresa}.json`;            
             
             procesarFormulario(empresa, tarifaOriginal, tension, peaje, formulario, rutaJson);            
         });

@@ -86,7 +86,7 @@ function generarFormulario(tipo, numPeriodos) {
         {csc:55, pa:15.6,  ent2:0, epta:1440 , evalle:1440 , eresto:1440}
     ]
 
-    let datos = datosT3;
+    let datos = datosT2;
     // Generar los periodos
     for (let i = 0; i < numPeriodos; i++) {
         html += `
@@ -128,8 +128,23 @@ function generarFormulario(tipo, numPeriodos) {
             }
         } else if (tipo ==='T1'){
             html += `
+                    <div class="col mb-3 hidden">
+                        <input class="form-control" type="text" name="csc" placeholder="" value="0" disabled>                                        
+                    </div>
+                    <div class="col mb-3 hidden">
+                        <input class="form-control" type="text" name="pa" placeholder="" value="0" disabled>                                        
+                    </div>
                     <div class="col mb-3">
-                        <input class="form-control" type="text" name="ent1" placeholder="" value="${datos[i].ent2}">                                       
+                        <input class="form-control" type="text" name="ent2" placeholder="" value="${datos[i].ent2}">                                       
+                    </div>
+                    <div class="col mb-3 hidden">
+                        <input class="form-control" type="text" name="epta" placeholder="" value="0" disabled>
+                    </div>
+                    <div class="col mb-3 hidden">
+                        <input class="form-control" type="text" name="evalle" placeholder="" value="0" disabled>
+                    </div>
+                    <div class="col mb-3 hidden">
+                        <input class="form-control" type="text" name="eresto" placeholder="" value="0" disabled>
                     </div>`;
         }
 
