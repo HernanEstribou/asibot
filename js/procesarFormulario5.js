@@ -12,12 +12,13 @@ function calcularRangoSimulacion(datosFormulario, tarifaOriginal){
     
     for (const key in datosFormulario){
 
-        if (tarifaOriginal === 'T1') values.push(datosFormulario[key].ent2);
-        else values.push(datosFormulario[key].pa);
+        if (tarifaOriginal === 'T1') values.push(datosFormulario[key].ent2);    //Para T1 calculo los limites con valores de Energía
+        else values.push(datosFormulario[key].pa);                              //Para T2 y T3 calculo los limites con valores de PA
     }
 
     // Ordenar de mayor a menor
-    values.sort((a,b) =>b - a);    
+    values.sort((a,b) =>b - a); 
+    
     
     if (tarifaOriginal === 'T1'){
         cscMin = Math.trunc(values[0] / 720);
@@ -93,59 +94,37 @@ function penalidad(pa, csc, formularioTipo){
 }
 
 function refacturar(fila, tarifa, tarifaOriginal, calculoTipo){
-           
+      
+    
     let $cf = parseFloat(tarifa.cf);
     let $csc = parseFloat(tarifa.csc);
     let $pa = parseFloat(tarifa.pa);
     let $ent2 = parseFloat(tarifa.ent2);
     let $epta = parseFloat(tarifa.epta);
     let $evalle = parseFloat(tarifa.evalle);
-    let $eresto = parseFloat(tarifa.eresto);
-
-    let cf;
-    let csc;
-    let pa;
-    let ent2;
-    let epta;
-    let evalle;
-    let eresto;
-    let exc;
-
-    //console.log("Fila del formulario a multiplicar:");
-    //console.log(fila);    
+    let $eresto = parseFloat(tarifa.eresto);   
   
+    let cf = parseFloat(fila.cf);
+    let csc = parseFloat(fila.csc);
+    let pa = parseFloat(fila.pa);
+    let exc;
+    let ent2 = parseFloat(fila.ent2);
+    let epta = parseFloat(fila.epta);
+    let evalle = parseFloat(fila.evalle);
+    let eresto = parseFloat(fila.eresto);
+
     if (calculoTipo == 'real'){
-
-        csc = parseFloat(fila.csc);
-        pa = parseFloat(fila.pa);
-        if (tarifaOriginal == 'T1' || tarifaOriginal == 'T2'){                       
-            ent2 = parseFloat(fila.ent2);  
-            epta = 0;
-            evalle = 0;
-            eresto = 0;          
-        } else if(tarifaOriginal = 'T3'){
-            epta = parseFloat(fila.epta);
-            evalle = parseFloat(fila.evalle);
-            eresto = parseFloat(fila.eresto);
-            ent2 = 0;
-        } 
-        exc = penalidad(pa, csc, tarifaOriginal);
-
+        exc = penalidad(pa, csc, tarifaOriginal); 
     } else if (calculoTipo == 'simulado'){
-        
-        cf = fila.cf;
-        csc = fila.csc;
-        pa = fila.pa;
         exc = fila.exc;
-        ent2 = fila.ent2;
-        epta = fila.epta;
-        evalle = fila.evalle;
-        eresto = fila.eresto;
     }        
+
+    console.log("Fila del formulario a multiplicar:");
+    console.log(fila);
 
     //Calcular el importe
     let importe = $cf + $csc * (csc + exc) + pa * $pa + ent2 * $ent2 + epta * $epta + evalle * $evalle + eresto * $eresto;
-    //console.log(`$cf=${$cf} + $csc=${$csc} * (csc=${csc} + exc=${exc}) + pa=${pa} * $pa=${$pa} + ent2=${ent2} * $ent2=${$ent2} + epta=${epta} * $epta=${$epta} + evalle=${evalle} * $evalle=${$evalle} + eresto=${eresto} * $eresto=${$eresto}`);                                                                                   
+    console.log(`$cf=${$cf} + $csc=${$csc} * (csc=${csc} + exc=${exc}) + pa=${pa} * $pa=${$pa} + ent2=${ent2} * $ent2=${$ent2} + epta=${epta} * $epta=${$epta} + evalle=${evalle} * $evalle=${$evalle} + eresto=${eresto} * $eresto=${$eresto}`);                                                                                   
     
     return importe;
 }
@@ -169,23 +148,9 @@ function obtenerTarifa(fila, cuadroTarifario, tension, peaje){
     else {        
         //tarifaTipo = "T3BT"                                             //T3        
         tarifaTipo = "T3"
-    }    
-    
-    /*for (const i in cuadroTarifario){
-        if (cuadroTarifario[i].tarifa == tarifaTipo) return cuadroTarifario[i];
-    }*/
+    }   
+      
         
-    /*for (const i in cuadroTarifario){
-        if (cuadroTarifario[i].tarifa == tarifaTipo && tarifaTipo != "T3") return cuadroTarifario[i];
-
-        else if (cuadroTarifario[i].tarifa == tarifaTipo && tarifaTipo == "T3"){
-            if (cuadroTarifario[i].tension == tension){                
-                return cuadroTarifario[i];
-            } 
-        }
-    } */
-    
-    
     for (const i in cuadroTarifario){
         if (tarifaTipo == "T2" && cuadroTarifario[i].tarifa == tarifaTipo ) {            
             if(cuadroTarifario[i].peaje == peaje)  return cuadroTarifario[i];                   
@@ -202,17 +167,19 @@ function obtenerTarifa(fila, cuadroTarifario, tension, peaje){
 
 function recuperarDatosFormulario(formulario){
     const diccionario = {}
-    const filas = formulario.querySelectorAll('.row');
+    const filas = formulario.querySelectorAll('.row');    
 
     for (let i = 1; i < filas.length; i++) {
         const fila = filas[i];
         const campos = fila.querySelectorAll('input');
-        const objetoCampos = {};
+        const objetoCampos = {};        
 
-        campos.forEach(campo => {
+        campos.forEach(campo => {            
+
             objetoCampos[campo.name] = campo.value;
+            
         });
-
+       
         diccionario[i] = objetoCampos;
     }     
         
@@ -222,8 +189,13 @@ function recuperarDatosFormulario(formulario){
 
 function procesarFormulario(empresa, tarifaOriginal, tension, peaje, formulario, rutaJson) {    
     
-    let importeAnualReal = 0;
+    let importeRealAcumulado = 0;
+    let importeAnualRealProyectado;
+    let importeAnualSimuladoProyectado;
     let cuadroTarifario;
+    let min = Infinity;
+    let potenciaOptima;
+    let ultimoPeriodo = 0; 
     
     const datosFormulario = recuperarDatosFormulario(formulario);
     console.log(`Se envió el formulario ${tarifaOriginal}`);
@@ -243,21 +215,45 @@ function procesarFormulario(empresa, tarifaOriginal, tension, peaje, formulario,
     for (const i in datosFormulario){
         console.log("Período " + i);
         let tarifaFila = obtenerTarifa(datosFormulario[i], cuadroTarifario, tension, peaje);        
-        //console.log("Fila de la tarifa");
-        //console.log(tarifaFila);
+        console.log("Fila de la tarifa");
+        console.log(tarifaFila);
+                
+        //Me fijo cual es el valor de mes y año de la factura más reciente para poder averiguar la cscContratada
+        if ((parseInt(datosFormulario[i].periodo)) > ultimoPeriodo) ultimoPeriodo = parseInt(datosFormulario[i].periodo);        
 
-        let importe = refacturar(datosFormulario[i], tarifaFila, tarifaOriginal, "real");
+        let importeMensualReal = refacturar(datosFormulario[i], tarifaFila, tarifaOriginal, "real");
          
-        importe = Math.round(importe * 100) / 100;
+        importeMensualReal = Math.round(importeMensualReal * 100) / 100;
         
-        console.log("Importe mensual real: " + importe);
+        console.log("Importe mensual real: " + importeMensualReal);
         console.log("--------------------");
-        importeAnualReal = importeAnualReal + importe;
+        importeRealAcumulado = importeRealAcumulado + importeMensualReal;
     }
+    
+    importeRealAcumulado = Math.round(importeRealAcumulado * 100) / 100;
+    
+    ultimoPeriodo = ultimoPeriodo.toString();
+    
+    //Paso el objeto a array
+    const datosFormularioArray = Object.values(datosFormulario);
 
-    importeAnualReal = Math.round(importeAnualReal * 100) / 100;
+    //Filtro el item del ultimo periodo
+    const objetoUltimoPeriodo = datosFormularioArray.find(item => item.periodo === ultimoPeriodo);
+
+    //Extraigo la cscContratada del ultimo periodo
+    const cscContratada = objetoUltimoPeriodo.csc; 
+   
+    console.log("Ultimo periodo: " + ultimoPeriodo);
+    console.log("cscContratada: " + cscContratada);
+
+    let cantidadDePeriodos = Object.keys(datosFormulario).length;
+    importeAnualRealProyectado = (importeRealAcumulado / cantidadDePeriodos) * 12;
+    importeAnualRealProyectado = Math.round(importeAnualRealProyectado * 100) / 100;
+
     console.log("/////////////////////")
-    console.log("Importe anual real: " + importeAnualReal);
+    console.log("Importe REAL ACUMULADO: " + importeRealAcumulado);
+    console.log("Cantidad de períodos: " + cantidadDePeriodos);
+    console.log("Importe anual real proyectado: " + importeAnualRealProyectado);
     console.log("/////////////////////");
     console.log("SIMULACIÓN");
     console.log("************************************");
@@ -275,7 +271,7 @@ function procesarFormulario(empresa, tarifaOriginal, tension, peaje, formulario,
 
     for (let csc = cscMin; csc <= cscMax; csc++){
         
-        let importeAnualSimulado = 0;
+        let importeSimuladoAcumulado = 0;
 
         // Hacer una copia de datosFormulario en cada iteración para poder sobreescribirla porque javascript no deja modificar objeto original
         let formularioSimulado = JSON.parse(JSON.stringify(datosFormulario));
@@ -287,8 +283,8 @@ function procesarFormulario(empresa, tarifaOriginal, tension, peaje, formulario,
         for (let fila in formularioSimulado){           
             
             console.log("Período simulado " + fila);
-            //console.log("Fila del formulario original");
-            //console.log(formularioSimulado[fila])            
+            console.log("Fila del formulario original");
+            console.log(formularioSimulado[fila])            
 
             let filaNueva = completarCampos(
                 parseFloat(formularioSimulado[fila].cf),
@@ -309,15 +305,16 @@ function procesarFormulario(empresa, tarifaOriginal, tension, peaje, formulario,
                                              
             
             tarifaSimulada = obtenerTarifa(formularioSimulado[fila], cuadroTarifario, tension, peaje);        
-            //console.log("Fila de la tarifa simulada");
-            //console.log(tarifaSimulada);
+            console.log("Fila de la tarifa simulada");
+            console.log(tarifaSimulada);
 
-            let importeSimulado = refacturar(formularioSimulado[fila], tarifaSimulada, "", "simulado");
+            let importeMensualSimulado = refacturar(formularioSimulado[fila], tarifaSimulada, "", "simulado");
            
             datosPeriodos.push({
                 ["empresa"]: empresa,
                 ["tarifa"]:tarifaSimulada.tarifa,
                 ["tension"]: tension,
+                ["peaje"]: peaje,
                 ["periodo"]: fila,
                 ["csc"]:formularioSimulado[fila].csc,
                 ["pa"]:formularioSimulado[fila].pa,
@@ -333,31 +330,76 @@ function procesarFormulario(empresa, tarifaOriginal, tension, peaje, formulario,
                 ["$epta"]:tarifaSimulada.epta,
                 ["$evalle"]:tarifaSimulada.evalle,
                 ["$resto"]:tarifaSimulada.eresto,
-                ["$importe"]: importeSimulado 
+                ["$importe"]: importeMensualSimulado 
             })
                         
-            console.log("Importe simulado mensual: " + importeSimulado);
+            console.log("Importe simulado mensual: " + importeMensualSimulado);
             console.log("--------------------");
 
-            importeAnualSimulado = importeAnualSimulado + importeSimulado;
+            importeSimuladoAcumulado = importeSimuladoAcumulado + importeMensualSimulado;
            
         }
-        importeAnualSimulado = Math.round(importeAnualSimulado * 100) / 100;
+        importeSimuladoAcumulado = Math.round(importeSimuladoAcumulado * 100) / 100;
 
-        listaImportesSimulados.push({["csc"]:csc, [tarifaSimulada.tarifa] : importeAnualSimulado});        
+        listaImportesSimulados.push({["csc"]:csc, [tarifaSimulada.tarifa] : importeSimuladoAcumulado});        
         
         console.log("///////////////////////////////////////////////////")
-        console.log("Importe simulado ANUAL : " + importeAnualSimulado);
+        console.log("Importe SIMULADO ACUMULADO : " + importeSimuladoAcumulado);
         console.log("///////////////////////////////////////////////////")
-        console.log("*******************************")        
+        console.log("*******************************")
+        
+        if (importeSimuladoAcumulado < min){
+            min = importeSimuladoAcumulado;
+            potenciaOptima = csc;
+        } 
     }
-    console.log("Importe anual Real");
-    console.log(importeAnualReal);   
+    importeAnualSimuladoProyectado = (min / cantidadDePeriodos) * 12;
+    importeAnualSimuladoProyectado = Math.round(importeAnualSimuladoProyectado * 100) / 100;
+
+    console.log("Importe anual Real Acumulado: " + importeRealAcumulado);     
+    console.log("Minimo importe: " + min + " - Csc optima: " + potenciaOptima);  
     console.log("Lista de importes anuales por tarifa:");
-    console.log(listaImportesSimulados);
-      
+    console.log(listaImportesSimulados);    
+    
+    let mensaje = generarMensaje(importeAnualSimuladoProyectado, importeAnualRealProyectado, cscMin, cscMax, cantidadDePeriodos, cscContratada, potenciaOptima)    
+    popupAhorro(mensaje);    
+
     let contenidoCSV = formatearCSV(datosPeriodos);    
     descargarCSV(contenidoCSV, "datos_periodos.csv");
+    
+}
+
+function generarMensaje(importeAnualSimuladoProyectado, importeAnualRealProyectado, cscMin, cscMax, cantidadDePeriodos, cscContratada, potenciaOptima){
+    let mensaje = `Limite inferior: ${cscMin}<br>
+                   Limite superior: ${cscMax}<br>
+                   Se utilizaron ${cantidadDePeriodos} facturas significativas<br><br>
+                   La potencia contratada actual es: ${cscContratada}<br>
+                   Generando un importe anual proyectado de: <br>
+                   <b>$${importeAnualRealProyectado}</b><br><br>
+                   La potencia optima calculada es: ${potenciaOptima}<br>                  
+                   ` 
+    if (importeAnualSimuladoProyectado < importeAnualRealProyectado){
+        let ahorro = importeAnualRealProyectado - importeAnualSimuladoProyectado;
+        ahorro = Math.round(ahorro * 100) / 100;
+        
+        mensaje += `Generando un importe anual proyectado de <br>
+                    <b>$${importeAnualSimuladoProyectado}</b><br><br>                    
+                    Esto genera un ahorro de: <b>${ahorro}</b>
+                    `       
+    } else {
+        console.log("No se detectó oportunidad de ahorro");
+        mensaje +=`No se detectó oportunidad de ahorro`
+    }
+    
+    return mensaje;
+}
+
+function popupAhorro(mensaje){
+    //Sweet Alert
+    Swal.fire({
+        title: "Resultado",
+        html: mensaje,               
+    });
 }
 
 function parsearBotonSeleccionado(buttons){
