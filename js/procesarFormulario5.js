@@ -57,6 +57,9 @@ function completarCampos(cf,csc,pa,exc,ent2,epta,evalle,eresto,cscNuevo,tarifaOr
         } else if (tarifaOriginal === 'T1'){ //Simulando T2 cuando ingresan T1
             exc=0;
             return [1,cscNuevo,cscNuevo,exc,ent2,0,0,0];
+        } else if (tarifaOriginal === 'T2'){ //Simulando T2 cuando ingresan T2
+            exc = penalidad(pa, cscNuevo, 'T2');
+            return [1,cscNuevo,pa,exc,ent2,0,0,0]
         }
     }
                      
@@ -167,19 +170,30 @@ function obtenerTarifa(fila, cuadroTarifario, tension, peaje){
 
 function recuperarDatosFormulario(formulario){
     const diccionario = {}
-    const filas = formulario.querySelectorAll('.row');    
+    const filas = formulario.querySelectorAll('.row');
+    let hayCamposVacios = false; // Flag para verificar campos vacíos    
 
     for (let i = 1; i < filas.length; i++) {
         const fila = filas[i];
         const campos = fila.querySelectorAll('input');
         const objetoCampos = {};        
 
-        campos.forEach(campo => {            
-
-            objetoCampos[campo.name] = campo.value;
+        campos.forEach(campo => {
             
+            if (!campo.value) {
+                
+                hayCamposVacios = true; // Si hay un campo vacío, activa la flag
+                return; // Detiene la iteración de la columna del formulario
+            }
+
+            objetoCampos[campo.name] = campo.value;            
         });
-       
+        
+        if (hayCamposVacios) {            
+            return; // Detiene la iteración de las filas del formulario
+        }
+
+        
         diccionario[i] = objetoCampos;
     }     
         
@@ -200,6 +214,14 @@ function procesarFormulario(empresa, tarifaOriginal, tension, peaje, formulario,
     const datosFormulario = recuperarDatosFormulario(formulario);
     console.log(`Se envió el formulario ${tarifaOriginal}`);
     console.log(datosFormulario);
+
+    if (!datosFormulario){
+        const errorCamposVacios = "Si Ud. no cuenta con 12 facturas o cree que las mismas no representan su consumo próximo, comuniquese con la DGPEN para un anaálisis personzalizado";
+        const titulo = "Todos los campos son obligatorios"
+        
+        popupResultado(titulo, errorCamposVacios)
+        return;
+    }
                 
     cuadroTarifario = loadJSONSync(rutaJson);     
     
@@ -234,7 +256,7 @@ function procesarFormulario(empresa, tarifaOriginal, tension, peaje, formulario,
     
     ultimoPeriodo = ultimoPeriodo.toString();
     
-    //Paso el objeto a array
+    //Convierto el objeto en array para poder filtrarlo
     const datosFormularioArray = Object.values(datosFormulario);
 
     //Filtro el item del ultimo periodo
@@ -356,13 +378,17 @@ function procesarFormulario(empresa, tarifaOriginal, tension, peaje, formulario,
     importeAnualSimuladoProyectado = (min / cantidadDePeriodos) * 12;
     importeAnualSimuladoProyectado = Math.round(importeAnualSimuladoProyectado * 100) / 100;
 
-    console.log("Importe anual Real Acumulado: " + importeRealAcumulado);     
-    console.log("Minimo importe: " + min + " - Csc optima: " + potenciaOptima);  
+    console.log("Importe anual Real Acumulado: " + importeRealAcumulado);
+    console.log("Importe anual Real Proyectado: " + importeAnualRealProyectado)
+    console.log("--------------------------------------------------------------")     
+    console.log("Minimo importe Simulado Acumulado: " + min + " | Csc optima: " + potenciaOptima);
+    console.log("Minimo importe Simulado Proyectado: " + importeAnualSimuladoProyectado)  
     console.log("Lista de importes anuales por tarifa:");
     console.log(listaImportesSimulados);    
     
-    let mensaje = generarMensaje(importeAnualSimuladoProyectado, importeAnualRealProyectado, cscMin, cscMax, cantidadDePeriodos, cscContratada, potenciaOptima)    
-    popupAhorro(mensaje);    
+    const [titulo, mensaje] = generarMensaje(importeAnualSimuladoProyectado, importeAnualRealProyectado, cscMin, cscMax, cantidadDePeriodos, cscContratada, potenciaOptima)   
+    
+    popupResultado(titulo, mensaje);    
 
     let contenidoCSV = formatearCSV(datosPeriodos);    
     descargarCSV(contenidoCSV, "datos_periodos.csv");
@@ -370,6 +396,7 @@ function procesarFormulario(empresa, tarifaOriginal, tension, peaje, formulario,
 }
 
 function generarMensaje(importeAnualSimuladoProyectado, importeAnualRealProyectado, cscMin, cscMax, cantidadDePeriodos, cscContratada, potenciaOptima){
+    let titulo = "";
     let mensaje = `Limite inferior: ${cscMin}<br>
                    Limite superior: ${cscMax}<br>
                    Se utilizaron ${cantidadDePeriodos} facturas significativas<br><br>
@@ -381,23 +408,24 @@ function generarMensaje(importeAnualSimuladoProyectado, importeAnualRealProyecta
     if (importeAnualSimuladoProyectado < importeAnualRealProyectado){
         let ahorro = importeAnualRealProyectado - importeAnualSimuladoProyectado;
         ahorro = Math.round(ahorro * 100) / 100;
-        
+        titulo = "Se detectó posibilidad de ahorro";
         mensaje += `Generando un importe anual proyectado de <br>
                     <b>$${importeAnualSimuladoProyectado}</b><br><br>                    
                     Esto genera un ahorro de: <b>${ahorro}</b>
                     `       
     } else {
         console.log("No se detectó oportunidad de ahorro");
-        mensaje +=`No se detectó oportunidad de ahorro`
+        titulo = "No se detectó oportunidad de ahorro";
+        //mensaje +=`No se detectó oportunidad de ahorro`
     }
     
-    return mensaje;
+    return [titulo, mensaje];
 }
 
-function popupAhorro(mensaje){
+function popupResultado(titulo, mensaje){
     //Sweet Alert
     Swal.fire({
-        title: "Resultado",
+        title: titulo,
         html: mensaje,               
     });
 }

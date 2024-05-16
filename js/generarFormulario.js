@@ -62,9 +62,9 @@ function generarFormulario(tipo, numPeriodos) {
         {csc:40, pa:56,    ent2:19440, epta:0 , evalle:0 , eresto:0},
         {csc:40, pa:62.40, ent2:21480, epta:0 , evalle:0 , eresto:0},
         {csc:40, pa:65.60, ent2:23920, epta:0 , evalle:0 , eresto:0},
-        {csc:40, pa:68.40, ent2:23400, epta:0 , evalle:0 , eresto:0},
+        /*{csc:40, pa:68.40, ent2:23400, epta:0 , evalle:0 , eresto:0},
         {csc:40, pa:68.80, ent2:16000, epta:0 , evalle:0 , eresto:0},
-        /*{csc:40, pa:18,    ent2:5240,  epta:0 , evalle:0 , eresto:0},
+        {csc:40, pa:18,    ent2:5240,  epta:0 , evalle:0 , eresto:0},
         {csc:40, pa:15.8,  ent2:4280,  epta:0 , evalle:0 , eresto:0},
         {csc:40, pa:15.6,  ent2:4320,  epta:0 , evalle:0 , eresto:0},
         {csc:40, pa:15.6,  ent2:4160,  epta:0 , evalle:0 , eresto:0},
@@ -76,9 +76,9 @@ function generarFormulario(tipo, numPeriodos) {
         {csc:55, pa:56,    ent2:0, epta:6480 , evalle:6480 , eresto:6480},
         {csc:55, pa:62.40, ent2:0, epta:7160 , evalle:7160 , eresto:7160},
         {csc:55, pa:65.60, ent2:0, epta:7973 , evalle:7973 , eresto:7973},
-        {csc:55, pa:68.40, ent2:0, epta:7800 , evalle:7800 , eresto:7800},
+        /*{csc:55, pa:68.40, ent2:0, epta:7800 , evalle:7800 , eresto:7800},
         {csc:55, pa:68.80, ent2:0, epta:5333 , evalle:5333 , eresto:5333},
-        /*{csc:55, pa:18,    ent2:0, epta:1746 , evalle:1746 , eresto:1746},
+        {csc:55, pa:18,    ent2:0, epta:1746 , evalle:1746 , eresto:1746},
         {csc:55, pa:15.8,  ent2:0, epta:1426 , evalle:1426 , eresto:1426},
         {csc:55, pa:15.6,  ent2:0, epta:1440 , evalle:1440 , eresto:1440},
         {csc:55, pa:15.6,  ent2:0, epta:1386 , evalle:1386 , eresto:1386},
@@ -101,7 +101,7 @@ function generarFormulario(tipo, numPeriodos) {
         {csc:86, pa:42, ent2:0, epta:3279 , evalle:9523 ,  eresto:3274},
     ]
 
-    let datos = datosT3;
+    let datos = datosT2;
     // Generar los periodos
     for (let i = 0; i < numPeriodos; i++) {
         html += `
@@ -111,73 +111,73 @@ function generarFormulario(tipo, numPeriodos) {
                     <p>${i+1}</p>
                 </div>
                 <div class="col mb-3">
-                    <input class="form-control" type="text" name="periodo" placeholder="AAAAMM" pattern="[0-9]{6}" minlength="6" maxlength="6">
+                    <input class="form-control" id="periodo" type="text" name="periodo" placeholder="AAAAMM" pattern="[0-9]{6}" minlength="6" maxlength="6" title="La fecha debe estar en formato AAAAMM. Ej: 202403" required>
                 </div>`;                
                 
         if (tipo === 'T3' || tipo === 'T2'){
             html += `
                 <div class="col mb-3">
-                <input class="form-control" type="text" name="csc" placeholder="" value="${datos[i].csc}">                                        
+                <input class="form-control" type="number" step="0.01" min="0" name="csc" placeholder="" value="${datos[i].csc}" required>                                        
                 </div>
                 <div class="col mb-3">
-                    <input class="form-control" type="text" name="pa" placeholder="" value="${datos[i].pa}">                                        
+                    <input class="form-control" type="number" step="0.01" min="0" name="pa" placeholder="" value="${datos[i].pa}" required>                                        
                 </div>`;
         
 
             if (tipo === 'T3') {
                 html += `
                     <div class="col mb-3 hidden">
-                        <input class="form-control" type="text" name="ent2" placeholder="" value="0">                                       
+                        <input class="form-control" type="number" step="0.01" min="0" name="ent2" placeholder="" value="0">                                       
                     </div>
                     <div class="col mb-3">
-                        <input class="form-control" type="text" name="epta" placeholder="" value="${datos[i].epta}">
+                        <input class="form-control" type="number" step="0.01" min="0" name="epta" placeholder="" value="${datos[i].epta}" required>
                     </div>
                     <div class="col mb-3">
-                        <input class="form-control" type="text" name="evalle" placeholder="" value="${datos[i].evalle}">
+                        <input class="form-control" type="number" step="0.01" min="0" name="evalle" placeholder="" value="${datos[i].evalle}" required>
                     </div>
                     <div class="col mb-3">
-                        <input class="form-control" type="text" name="eresto" placeholder="" value="${datos[i].eresto}">
+                        <input class="form-control" type="number" step="0.01" min="0" name="eresto" placeholder="" value="${datos[i].eresto}" required>
                     </div>`;
             } else if(tipo==='T2') {
             html += `
                     <div class="col mb-3">
-                        <input class="form-control" type="text" name="ent2" placeholder="" value="${datos[i].ent2}">                                       
+                        <input class="form-control" type="number" step="0.01" min="0" name="ent2" placeholder="" value="${datos[i].ent2}" required>                                       
                     </div>
                     <div class="col mb-3 hidden">
-                        <input class="form-control" type="text" name="epta" placeholder="" value="0" disabled>
+                        <input class="form-control" type="number" step="0.01" min="0" name="epta" placeholder="" value="0" disabled>
                     </div>
                     <div class="col mb-3 hidden">
-                        <input class="form-control" type="text" name="evalle" placeholder="" value="0" disabled>
+                        <input class="form-control" type="number" step="0.01" min="0" name="evalle" placeholder="" value="0" disabled>
                     </div>
                     <div class="col mb-3 hidden">
-                        <input class="form-control" type="text" name="eresto" placeholder="" value="0" disabled>
+                        <input class="form-control" type="number" step="0.01" min="0" name="eresto" placeholder="" value="0" disabled>
                     </div>`;
             }
         } else if (tipo ==='T1'){
             html += `
                     <div class="col mb-3 hidden">
-                        <input class="form-control" type="text" name="csc" placeholder="" value="0" disabled>                                        
+                        <input class="form-control" type="number" step="0.01" min="0" name="csc" placeholder="" value="0" disabled>                                        
                     </div>
                     <div class="col mb-3 hidden">
-                        <input class="form-control" type="text" name="pa" placeholder="" value="0" disabled>                                        
+                        <input class="form-control" type="number" step="0.01" min="0" name="pa" placeholder="" value="0" disabled>                                        
                     </div>
                     <div class="col mb-3">
-                        <input class="form-control" type="text" name="ent2" placeholder="" value="${datos[i].ent2}">                                       
+                        <input class="form-control" type="number" step="0.01" min="0" name="ent2" placeholder="" value="${datos[i].ent2}" required>                                       
                     </div>
                     <div class="col mb-3 hidden">
-                        <input class="form-control" type="text" name="epta" placeholder="" value="0" disabled>
+                        <input class="form-control" type="number" step="0.01" min="0" name="epta" placeholder="" value="0" disabled>
                     </div>
                     <div class="col mb-3 hidden">
-                        <input class="form-control" type="text" name="evalle" placeholder="" value="0" disabled>
+                        <input class="form-control" type="number" step="0.01" min="0" name="evalle" placeholder="" value="0" disabled>
                     </div>
                     <div class="col mb-3 hidden">
-                        <input class="form-control" type="text" name="eresto" placeholder="" value="0" disabled>
+                        <input class="form-control" type="number" step="0.01" min="0" name="eresto" placeholder="" value="0" disabled>
                     </div>`;
         }
 
         html += `
             <!--<div class="col mb-3">
-                <input class="form-control" type="text" name="importe${i}" placeholder="Importe">
+                <input class="form-control" type="number" step="0.01" min="0" name="importe${i}" placeholder="Importe">
             </div>-->
         </div>`;
     }
@@ -188,9 +188,9 @@ function generarFormulario(tipo, numPeriodos) {
 }
 
 // Generar los formularios T2 y T3 con 2 periodos cada uno
-const formularioT1HTML = generarFormulario('T1', 5); //11
-const formularioT2HTML = generarFormulario('T2', 5); //11
-const formularioT3HTML = generarFormulario('T3', 5); //11
+const formularioT1HTML = generarFormulario('T1', 3); //11
+const formularioT2HTML = generarFormulario('T2', 3); //11
+const formularioT3HTML = generarFormulario('T3', 3); //11
 
 // Insertar los formularios en los contenedores correspondientes
 document.getElementById('formulario-t1-container').innerHTML = formularioT1HTML;

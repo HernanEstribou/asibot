@@ -1,12 +1,20 @@
 
-body{
-   
+body{   
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Establece la altura mínima del cuerpo al 100% de la ventana */
+    
 }
+
 
 
 li{
     list-style: none;
+}
+
+a {
+    text-decoration: none;
 }
 
 /*.container-empresas{
@@ -16,6 +24,45 @@ hr{
     margin-bottom: 1%;
     margin-top: 1.5%;
     width: 40%;
+    margin-left: auto; /* Establece el margen izquierdo a auto */
+    margin-right: auto; /* Establece el margen derecho a auto */
+}
+
+
+footer {
+    /*position: fixed;*/
+
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #e9f5f7;
+    text-align: center;
+    padding: 10px 0;
+    margin-top: auto;
+}
+
+.titulo{
+    font-size: 2rem;
+    background-color: #F7C437;
+}
+
+.svg{
+    
+    margin:1%; /* Tamaño específico */
+    height: 50px; /* Mantén la relación de aspecto */
+    
+}
+
+.subtitulo{
+    padding: 1%;
+}
+
+.card{
+    margin-bottom: 2%;
+}
+
+.advertencia{
+    width: fit-content;
     margin-left: auto; /* Establece el margen izquierdo a auto */
     margin-right: auto; /* Establece el margen derecho a auto */
 }
@@ -42,6 +89,7 @@ hr{
     display: block;
 }
 
+
 .selected{
     background-color: rgb(23, 209, 178);
     border: 2.5px solid black;
@@ -62,4 +110,17 @@ hr{
     color: rgb(127, 204, 240);
 }
 
-/*Formulario */
+/*Desactiva cursores de incrementar y decrementar valor en los inputs de tipo number
+/* Chrome, Safari, Edge, Opera */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+
