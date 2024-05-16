@@ -62,14 +62,14 @@ function generarFormulario(tipo, numPeriodos) {
         {csc:40, pa:56,    ent2:19440, epta:0 , evalle:0 , eresto:0},
         {csc:40, pa:62.40, ent2:21480, epta:0 , evalle:0 , eresto:0},
         {csc:40, pa:65.60, ent2:23920, epta:0 , evalle:0 , eresto:0},
-        /*{csc:40, pa:68.40, ent2:23400, epta:0 , evalle:0 , eresto:0},
+        {csc:40, pa:68.40, ent2:23400, epta:0 , evalle:0 , eresto:0},
         {csc:40, pa:68.80, ent2:16000, epta:0 , evalle:0 , eresto:0},
         {csc:40, pa:18,    ent2:5240,  epta:0 , evalle:0 , eresto:0},
         {csc:40, pa:15.8,  ent2:4280,  epta:0 , evalle:0 , eresto:0},
         {csc:40, pa:15.6,  ent2:4320,  epta:0 , evalle:0 , eresto:0},
         {csc:40, pa:15.6,  ent2:4160,  epta:0 , evalle:0 , eresto:0},
         {csc:40, pa:15.6,  ent2:4200,  epta:0 , evalle:0 , eresto:0},
-        {csc:40, pa:15.6,   ent2:4320, epta:0 , evalle:0 , eresto:0}*/
+        {csc:40, pa:15.6,   ent2:4320, epta:0 , evalle:0 , eresto:0}
     ]
 
     let datosT3 = [
@@ -187,10 +187,12 @@ function generarFormulario(tipo, numPeriodos) {
     return html;
 }
 
+const cantidadPeriodos = 11;
+
 // Generar los formularios T2 y T3 con 2 periodos cada uno
-const formularioT1HTML = generarFormulario('T1', 3); //11
-const formularioT2HTML = generarFormulario('T2', 3); //11
-const formularioT3HTML = generarFormulario('T3', 3); //11
+const formularioT1HTML = generarFormulario('T1', cantidadPeriodos); 
+const formularioT2HTML = generarFormulario('T2', cantidadPeriodos); 
+const formularioT3HTML = generarFormulario('T3', cantidadPeriodos); 
 
 // Insertar los formularios en los contenedores correspondientes
 document.getElementById('formulario-t1-container').innerHTML = formularioT1HTML;

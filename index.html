@@ -15,71 +15,113 @@
 
 
 </head>
-<body>
     <header>        
         <nav class="nav titulo">
             <img src="imgs/logo-BA-1.png" alt="Gobierno de la Ciudad de Buenos Aires - Inicio" class="svg">
             <!--<h2 class="nav-link disabled" href="#">Ministerio de desarrollo económico</h2>-->            
         </nav>
     </header>
-    
-    <h2 class="subtitulo">TEST DE REDUCCIÓN DE COSTOS ENERGÉTICOS</h2>
-    <div class="card">
-        <div class="card-body">
-            <p>Hacé tu diagnóstico de manera rápida y gratuita</p>
-            <p>Comprobá si la categoría tarifaria y la capacidad contratadas son las adecuadas para el consumo energético de tu PYME</p>                
+    <div class="historical-buttons">        
+        <button class="historical-btn empresa-selected btn btn-primary selected hidden"></button>
+        <button class="historical-btn tarifa-selected btn btn-primary selected hidden"></button>
+        <button class="historical-btn tension-selected btn btn-primary selected hidden"></button>
+        <button class="historical-btn peaje-selected btn btn-primary selected hidden"></button>
+        <a href="#container-home"><button class="historical-btn reiniciar btn btn-primary hidden" onclick="reiniciarTest()">Reiniciar Test</button></a>        
+    </div>
+
+    <div id= "container-home" class="container-home">
+        <h2 class="subtitulo">TEST DE REDUCCIÓN DE COSTOS ENERGÉTICOS</h2>
+        
+        <div class="card card-settings">
+            <div class="card-body">                
+                <p>Hacé tu diagnóstico de manera rápida y gratuita</p>
+                <p>Comprobá si la categoría tarifaria y la capacidad contratadas son las adecuadas para el consumo energético de tu PYME</p>                
+                
+            </div>
+            <div class="card advertencia ">
+                <div class="card-body">
+                    <b><p>Necesitás las últimas 12 facturas mensuales consecutivas de electricidad.</p></b>
+                    <a href="#container-empresas" class="comenzar-btn btn btn-primary" onclick="iniciarTest()">Comenzar</a>
+                </div>
+                
+            </div>
             
         </div>
-        <div class="card advertencia">
-            <div class="card-body">
-                Necesitás las últimas 12 facturas mensuales consecutivas de electricidad.
+        
+        
+    </div>
+    
+        
+    </div>
+    <div class="container-empresas container-menu hidden" id="container-empresas">
+        <div class="card card-settings">
+            <div class="card-body">    
+                <p>Seleccione la empresa que le presta servicio</p>
+                <div class="buttons-container">
+                    <a href="#container-tarifas"><button class="button-edenor btn btn-primary" onclick="seleccionarEmpresa(this)" value="edenor">EDENOR</button></a>
+                    <a href="#container-tarifas"><button class="button-edesur btn btn-primary" onclick="seleccionarEmpresa(this)" value="edesur">EDESUR</button></a>
+                </div>
             </div>
-          </div>
-      </div>
-    <div>
-    
-        
-    </div>
-    <div class="container-empresas">
-        
-        <p>Seleccione la empresa que le presta servicio</p>
-        <button class="button-edenor btn btn-primary" onclick="seleccionarEmpresa(this)" value="edenor">EDENOR</button>
-        <button class="button-edesur btn btn-primary" onclick="seleccionarEmpresa(this)" value="edesur">EDESUR</button>
+        </div>
     </div>
     
-    <div class="container-tarifas hidden"> 
-        <hr>      
-        <p>Seleccione el tipo de factura a cargar T1, T2 o T3</p>
-        <button class="button-t1 btn btn-primary" onclick="seleccionarTarifa(this)" value="T1">T1</button>
-        <button class="button-t2 btn btn-primary" onclick="seleccionarTarifa(this)" value="T2">T2</button>
-        <button class="button-t3 btn btn-primary" onclick="seleccionarTarifa(this)" value="T3">T3</button>
+    <div id="container-tarifas"class="container-tarifas container-menu hidden"> 
+        <!--<hr>-->
+        <div class="card card-settings">
+            <div class="card-body">
+        
+                <p>Seleccione el tipo de factura a cargar T1, T2 o T3</p>
+                <div class="buttons-container">
+                    <a href="#container-t1">
+                        <button class="button-t1 btn btn-primary" onclick="seleccionarTarifa(this)" value="T1">T1</button>
+                    </a>
+                    <a href="#container-peaje">
+                        <button class="button-t2 btn btn-primary" onclick="seleccionarTarifa(this)" value="T2">T2</button>
+                    </a>
+                    <a href="#container-tension">
+                        <button class="button-t3 btn btn-primary" onclick="seleccionarTarifa(this)" value="T3">T3</button>
+                    </a>
+                </div>
+            </div>    
+        </div>
     </div>
 
-    <div class="container-tension hidden"> 
-        <hr>      
-        <p>Seleccione si tiene Media o Baja tensión</p>
-        <button class="button-BT btn btn-primary" onclick="seleccionarTension(this)" value="BT">Baja Tensión</button>
-        <button class="button-MT btn btn-primary" onclick="seleccionarTension(this)" value="MT">Media Tensión</button>
+    <div id="container-tension" class="container-tension container-menu hidden"> 
+        <!--<hr>-->
+        <div class="card card-settings">
+            <div class="card-body">      
+                <p>Seleccione si tiene Media o Baja tensión</p>
+                <div class="buttons-container">
+                    <a href="#container-peaje"><button class="button-BT btn btn-primary" onclick="seleccionarTension(this)" value="BT">Baja Tensión</button></a>
+                    <a href="#container-peaje"><button class="button-MT btn btn-primary" onclick="seleccionarTension(this)" value="MT">Media Tensión</button></a>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div class="container-peaje hidden"> 
-        <hr>      
-        <p>Seleccione si su factura es con Peaje o sin Peaje</p>
-        <button class="button-P btn btn-primary" onclick="seleccionarPeaje(this)" value="SI">Peaje</button>
-        <button class="button-NP btn btn-primary" onclick="seleccionarPeaje(this)" value="NO">Sin Peaje</button>
+    <div id="container-peaje" class="container-peaje container-menu hidden"> 
+        <!--<hr>-->
+        <div class="card card-settings">
+            <div class="card-body">      
+                <p>Seleccione si su factura es con Peaje o sin Peaje</p>
+                <div class="buttons-container">
+                    <button class="button-P btn btn-primary" onclick="seleccionarPeaje(this)" value="SI">Peaje</button>
+                    <button class="button-NP btn btn-primary" onclick="seleccionarPeaje(this)" value="NO">Sin Peaje</button>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div class="container-t1 hidden">
-        <hr>
-        <p>Cargue los datos de las últimas 12 facturas:</p>        
-        <div class="buttons-container">
+    <div id="container-t1" class="container-t1 container-menu hidden">
+        <!--<hr>-->                
+        <div class="info-container">
             <a onclick="verFactura('Período', 'Año y Mes')" class="info-icon"><i class="fa-regular fa-circle-question fa-lg"></i></a>            
             <span><span class="campo">Período:</span> Año y Mes en formato AAAAMM</span><br>            
             <a onclick="verFactura('EnT1','Energía T1')" class="info-icon"><i class="fa-regular fa-circle-question fa-lg"></i></a>
             <span><span class="campo">EnT2</span>: Energía T2</span><br> 
         </div>                   
         <div class="container mt-4">
-            <div class="card border-secondary">
+            <div class="card form-card border-secondary">
                 <div class="card-header">Datos a ingresar de FACTURAS T1</div>
                     <div class="card-body" id="formulario-t1-container">
                         <!-- Acá va el formulario T1 -->
@@ -90,10 +132,9 @@
         
     </div>
     
-    <div class="container-t2 hidden">
-        <hr>
-        <p>Cargue los datos de las últimas 12 facturas:</p>        
-        <div class="buttons-container">
+    <div id="container-t2" class="container-t2 container-menu hidden">
+        <!--<hr>-->                
+        <div class="info-container">
             <a onclick="verFactura('Período', 'Año y Mes')" class="info-icon"><i class="fa-regular fa-circle-question fa-lg"></i></a>            
             <span><span class="campo">Período:</span> Año y Mes en formato AAAAMM</span><br>
             <a onclick="verFactura('CSC','Capacidad de suministro contratada')" class="info-icon"><i class="fa-regular fa-circle-question fa-lg"></i></a>
@@ -105,7 +146,7 @@
         </div>
 
         <div class="container mt-4">
-            <div class="card border-secondary">
+            <div class="card form-card border-secondary">
                 <div class="card-header">Datos a ingresar de FACTURAS T2</div>
                     <div class="card-body" id="formulario-t2-container">
                         <!-- Acá va el formulario T2 -->
@@ -116,11 +157,11 @@
         
     </div>
 
-    <div class="container-t3 hidden">
-        <hr>
-        <p>Cargue los datos de las últimas 12 facturas:</p>
+    <div id="container-t3" class="container-t3 container-menu hidden">
+        <!--<hr>-->
+        <!--<p>Cargue los datos de las últimas 12 facturas:</p>-->
         
-        <div class="buttons-container">
+        <div class="info-container">
             <a onclick="verFactura('Período','Año y Mes')" class="info-icon"><i class="fa-regular fa-circle-question fa-lg"></i></a>
             <span><span class="campo">Período:</span> Año y Mes en formato AAAAMM</span><br>
             <a onclick="verFactura('CSC', 'Capacidad de suministro contratada')" class="info-icon"><i class="fa-regular fa-circle-question fa-lg"></i></a>
@@ -137,7 +178,7 @@
                
         
         <div class="container mt-4">
-            <div class="card border-secondary">
+            <div class="card form-card border-secondary">
                 <div class="card-header">Datos a ingresar de FACTURAS T3</div>
                     <div class="card-body" id="formulario-t3-container">
                         <!-- Acá va el formulario T3 -->

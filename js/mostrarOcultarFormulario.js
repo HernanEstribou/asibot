@@ -1,4 +1,34 @@
+function iniciarTest(){
+    let containerEmpresas = document.querySelector(".container-empresas");
+    let buttonReset = document.querySelector(".reiniciar");
+
+    containerEmpresas.classList.remove('hidden');
+    buttonReset.classList.remove('hidden');
+}
+
+function reiniciarTest(){
+    
+    const selectedButtons = document.querySelectorAll('.selected');
+    const historicalButtons = document.querySelectorAll('.historical-btn');
+    const containerMenu = document.querySelectorAll('.container-menu');
+    
+    selectedButtons.forEach(button => {
+        button.classList.remove('selected');
+    });
+
+    historicalButtons.forEach(button => {
+        button.classList.add('hidden');
+    });
+
+    containerMenu.forEach(container => {
+        container.classList.add('hidden');
+    });
+
+}
+
 function seleccionarEmpresa(selectedButton){
+    let reiniciar = document.querySelector(".reiniciar");
+    let empresaSelected = document.querySelector(".empresa-selected");
     let containerTarifas = document.querySelector(".container-tarifas");
     let edenor = document.querySelector(".button-edenor");
     let edesur = document.querySelector(".button-edesur"); 
@@ -14,11 +44,15 @@ function seleccionarEmpresa(selectedButton){
     }
 
     selectedButton.classList.add("selected");
+    empresaSelected.classList.remove("hidden");
+    empresaSelected.textContent = selectedButton.textContent; 
     
     containerTarifas.classList.remove("hidden");
+    reiniciar.classList.remove("hidden");
 }
 
-function seleccionarTarifa(selectedButton) {            
+function seleccionarTarifa(selectedButton) { 
+    let tarifaSelected = document.querySelector(".tarifa-selected");           
     let containerT1 = document.querySelector(".container-t1");
     let containerT2 = document.querySelector(".container-t2");
     let containerT3 = document.querySelector(".container-t3");
@@ -70,70 +104,18 @@ function seleccionarTarifa(selectedButton) {
                        
     }
     //Aplico la clase selected al botón clickeado
-    selectedButton.classList.add("selected"); 
-}
-
-/*function seleccionarTarifa(selectedButton){            
-    
-    let containerT1 = document.querySelector(".container-t1");
-    let containerT2 = document.querySelector(".container-t2");
-    let containerT3 = document.querySelector(".container-t3");
-    let containerTension = document.querySelector(".container-tension");
-    let containerPeaje = document.querySelector(".container-peaje");
-    
-    let buttonT1 = document.querySelector(".button-t1");
-    let buttonT2 = document.querySelector(".button-t2");
-    let buttonT3 = document.querySelector(".button-t3");
-    let buttonBT = document.querySelector(".button-BT");
-    let buttonMT = document.querySelector(".button-MT");
-    let buttonP = document.querySelector(".button-P");
-    let buttonNP = document.querySelector(".button-NP");
-
-    if (selectedButton.classList.contains("button-t2")) {        
-        containerPeaje.classList.remove("hidden");        
-        
-        containerTension.classList.add("hidden");
-        
-        containerT3.classList.add("hidden");
-
-        if (buttonT3.classList.contains("selected")) {
-            buttonT3.classList.remove("selected");
-        }
-
-        //Remuevo la selección de Tensión
-        if(buttonBT.classList.contains("selected")){
-            buttonBT.classList.remove("selected");
-        } else if( buttonMT.classList.contains("selected")){
-            buttonMT.classList.remove("selected");
-        }
-
-        //selectedButton.classList.add("selected");
-    } else if (selectedButton.classList.contains("button-t3")) {      
-        containerPeaje.classList.add("hidden");
-                
-        containerTension.classList.remove("hidden");        
-        containerT2.classList.add("hidden");
-
-        if (buttonT2.classList.contains("selected")) {
-            buttonT2.classList.remove("selected");
-        }
-        //selectedButton.classList.add("selected");
-        
-    } 
-
     selectedButton.classList.add("selected");
 
-    //Remuevo la selección de Peaje
-    if(buttonP.classList.contains("selected")){
-        buttonP.classList.remove("selected");
-    } else if( buttonNP.classList.contains("selected")){
-        buttonNP.classList.remove("selected");
-    }
+    tarifaSelected.classList.remove("hidden");
+    tarifaSelected.textContent = selectedButton.textContent;    
     
-}*/
+}
+
+
 
 function seleccionarTension(selectedButton){
-    let containerT3 = document.querySelector(".container-t3");
+    //let containerT3 = document.querySelector(".container-t3");
+    let tensionSelected = document.querySelector(".tension-selected");
     let containerPeaje = document.querySelector(".container-peaje");
     let buttonBT = document.querySelector(".button-BT");
     let buttonMT = document.querySelector(".button-MT");
@@ -152,12 +134,16 @@ function seleccionarTension(selectedButton){
     }
 
     selectedButton.classList.add("selected");
+
+    tensionSelected.classList.remove("hidden");
+    tensionSelected.textContent = selectedButton.textContent;
      
     containerPeaje.classList.remove("hidden");    
     
 }
 
 function seleccionarPeaje(selectedButton){
+    let peajeSelected = document.querySelector(".peaje-selected");
     let containerT2 = document.querySelector(".container-t2");
     let containerT3 = document.querySelector(".container-t3");
     let buttonP = document.querySelector(".button-P");
@@ -178,11 +164,17 @@ function seleccionarPeaje(selectedButton){
     }   
     
     if (buttonT2.classList.contains("selected")){
-        containerT2.classList.remove("hidden");        
+        containerT2.classList.remove("hidden");
+        containerT2.scrollIntoView({ behavior: 'smooth' })        
     } else if (buttonT3.classList.contains("selected")){
-        containerT3.classList.remove("hidden");          
+        containerT3.classList.remove("hidden");
+        containerT3.scrollIntoView({ behavior: 'smooth' })          
     }
 
     selectedButton.classList.add("selected");
+
+    peajeSelected.classList.remove("hidden");
+    peajeSelected.textContent = selectedButton.textContent;
+    
        
 }

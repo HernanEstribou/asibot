@@ -1,25 +1,70 @@
+:root {
+    --dark: #132934;
+    --light-grey: rgb(245, 245, 255);
+    --secondary: #6DC0B6;
+    --main: #F7C437;
+    --buttons: #132934;        
+}
 
-body{   
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh; /* Establece la altura mínima del cuerpo al 100% de la ventana */
+header{
+    /*min-height: 12vh;*/   
     
 }
 
+nav{
+    display: flex;
+    align-items: center;
+    min-height: 12vh;
 
+    position: fixed; /* Fija el navbar en la parte superior */
+    top: 0; /* Posición en la parte superior de la página */
+    width: 100%; /* Ancho completo */
+
+    
+    /*opacity: 0.95;*/
+    z-index: 1000; /* Asegura que esté por encima de otros elementos */
+
+    
+}
 
 li{
     list-style: none;
 }
 
-a {
+body{   
+    text-align: center;    
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    min-height: 100vh;
+    padding: 0;
+    
+    
+}
+
+
+footer {
+    position: fixed;
+    min-height: 2vh;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: var(--secondary);
+    text-align: center;
+    padding: 1vh 0;
+    margin-top: auto;
+}
+
+a{
     text-decoration: none;
 }
 
-/*.container-empresas{
-    padding-bottom:3%;
-}*/
+footer a {
+    text-decoration: none;
+    color: #f4f9ff;
+}
+
+
 hr{
     margin-bottom: 1%;
     margin-top: 1.5%;
@@ -28,22 +73,70 @@ hr{
     margin-right: auto; /* Establece el margen derecho a auto */
 }
 
-
-footer {
-    /*position: fixed;*/
-
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background-color: #e9f5f7;
-    text-align: center;
-    padding: 10px 0;
-    margin-top: auto;
+.btn-custom{
+    background-color: var(--dark);
+    color: #f4f9ff;
 }
 
 .titulo{
     font-size: 2rem;
-    background-color: #F7C437;
+    background-color: var(--main);
+    /*height: 12vh;*/
+}
+
+.historical-buttons{
+    display: flex;
+    flex-direction: column;    
+    position: fixed;
+    top: 14vh;
+    left: 2vh;    
+    z-index: 1000; /* Asegura que esté por encima de otros elementos */
+}
+
+.historical-btn{
+    margin:2% 0;
+    /*width: fit-content;*/
+}
+
+.empresa-selected, .tarifa-selected, .tension-selected, .peaje-selected{
+    
+    
+}
+
+.container-home{
+    
+    min-height: 96vh;
+    /*background-color: aquamarine;*/
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Alinea verticalmente */
+    justify-content: center; /* Alinea horizontalmente (opcional) */
+    
+}
+
+.container-empresas, .container-tarifas, .container-tension, .container-peaje, .container-menu{
+    min-height: 100vh;     
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Alinea verticalmente */
+    justify-content: center; /* Alinea horizontalmente (opcional) */
+    
+}
+
+.container-empresas{
+    background-color: var(--dark);
+}
+
+.container-tarifas{
+    background-color: aliceblue;
+}
+
+.container-tension{
+    background-color: rgb(255, 255, 255);
+}
+
+.container-peaje{
+    background-color: var(--dark);
 }
 
 .svg{
@@ -53,21 +146,22 @@ footer {
     
 }
 
-.subtitulo{
-    padding: 1%;
+.card-settings{
+    padding: 3%;
 }
 
-.card{
-    margin-bottom: 2%;
+.form-card{
+    margin-bottom: 10vh;
 }
 
 .advertencia{
     width: fit-content;
     margin-left: auto; /* Establece el margen izquierdo a auto */
     margin-right: auto; /* Establece el margen derecho a auto */
+    background-color: rgb(243, 245, 247);
 }
 
-.buttons-container{
+.info-container{
     text-align: left;
     width: fit-content; /* Ajusta el ancho al contenido */
     margin-left: auto; /* Establece el margen izquierdo a auto */
@@ -77,7 +171,7 @@ footer {
     border: 1px solid;
 }
 
-.buttons-container a{
+.info-container a{
     margin-right: 5px;
 }
 
