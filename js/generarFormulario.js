@@ -59,17 +59,17 @@ function generarFormulario(tipo, numPeriodos) {
         </div>`;
 
     let datosT2 = [
-        {csc:40, pa:56,    ent2:19440, epta:0 , evalle:0 , eresto:0},
-        {csc:40, pa:62.40, ent2:21480, epta:0 , evalle:0 , eresto:0},
-        {csc:40, pa:65.60, ent2:23920, epta:0 , evalle:0 , eresto:0},
-        {csc:40, pa:68.40, ent2:23400, epta:0 , evalle:0 , eresto:0},
-        {csc:40, pa:68.80, ent2:16000, epta:0 , evalle:0 , eresto:0},
-        {csc:40, pa:18,    ent2:5240,  epta:0 , evalle:0 , eresto:0},
-        {csc:40, pa:15.8,  ent2:4280,  epta:0 , evalle:0 , eresto:0},
-        {csc:40, pa:15.6,  ent2:4320,  epta:0 , evalle:0 , eresto:0},
-        {csc:40, pa:15.6,  ent2:4160,  epta:0 , evalle:0 , eresto:0},
-        {csc:40, pa:15.6,  ent2:4200,  epta:0 , evalle:0 , eresto:0},
-        {csc:40, pa:15.6,   ent2:4320, epta:0 , evalle:0 , eresto:0}
+        {periodo:202405, csc:40, pa:56,    ent2:19440, epta:0 , evalle:0 , eresto:0},
+        {periodo:202404, csc:40, pa:62.40, ent2:21480, epta:0 , evalle:0 , eresto:0},
+        {periodo:202403, csc:40, pa:65.60, ent2:23920, epta:0 , evalle:0 , eresto:0},
+        {periodo:202402, csc:40, pa:68.40, ent2:23400, epta:0 , evalle:0 , eresto:0},
+        {periodo:202401, csc:40, pa:68.80, ent2:16000, epta:0 , evalle:0 , eresto:0},
+        {periodo:202312, csc:40, pa:18,    ent2:5240,  epta:0 , evalle:0 , eresto:0},
+        {periodo:202311, csc:40, pa:15.8,  ent2:4280,  epta:0 , evalle:0 , eresto:0},
+        {periodo:202310, csc:40, pa:15.6,  ent2:4320,  epta:0 , evalle:0 , eresto:0},
+        {periodo:202309, csc:40, pa:15.6,  ent2:4160,  epta:0 , evalle:0 , eresto:0},
+        {periodo:202308, csc:40, pa:15.6,  ent2:4200,  epta:0 , evalle:0 , eresto:0},
+        {periodo:202307, csc:40, pa:15.6,   ent2:4320, epta:0 , evalle:0 , eresto:0}
     ]
 
     let datosT3 = [
@@ -87,18 +87,18 @@ function generarFormulario(tipo, numPeriodos) {
     ]
 
     let datosT3Dai = [
-        {csc:86, pa:52, ent2:0, epta:5339 , evalle:12953 , eresto:4991},
-        {csc:86, pa:56, ent2:0, epta:3812 , evalle:8929 ,  eresto:3684},
-        {csc:86, pa:55, ent2:0, epta:6235 , evalle:15018 , eresto:6359},
-        {csc:86, pa:52, ent2:0, epta:5273 , evalle:12840 , eresto:5254},
-        {csc:86, pa:50, ent2:0, epta:4942 , evalle:11750 , eresto:4705},
-        {csc:86, pa:47, ent2:0, epta:3399 , evalle:8638 ,  eresto:3591},
-        {csc:86, pa:35, ent2:0, epta:3043 , evalle:7007 ,  eresto:2839},
-        {csc:86, pa:34, ent2:0, epta:2784 , evalle:6855 ,  eresto:2889},
-        {csc:86, pa:36, ent2:0, epta:174  , evalle:441 ,   eresto:168},
-        {csc:86, pa:37, ent2:0, epta:2803 , evalle:7184 ,  eresto:2879},
-        {csc:86, pa:40, ent2:0, epta:194  , evalle:520 ,   eresto:198},
-        {csc:86, pa:42, ent2:0, epta:3279 , evalle:9523 ,  eresto:3274},
+        {periodo:202405, csc:86, pa:52, ent2:0, epta:5339 , evalle:12953 , eresto:4991},
+        {periodo:202404, csc:86, pa:56, ent2:0, epta:3812 , evalle:8929 ,  eresto:3684},
+        {periodo:202403, csc:86, pa:55, ent2:0, epta:6235 , evalle:15018 , eresto:6359},
+        {periodo:202402, csc:86, pa:52, ent2:0, epta:5273 , evalle:12840 , eresto:5254},
+        {periodo:202401, csc:86, pa:50, ent2:0, epta:4942 , evalle:11750 , eresto:4705},
+        {periodo:202312, csc:86, pa:47, ent2:0, epta:3399 , evalle:8638 ,  eresto:3591},
+        {periodo:202311, csc:86, pa:35, ent2:0, epta:3043 , evalle:7007 ,  eresto:2839},
+        {periodo:202310, csc:86, pa:34, ent2:0, epta:2784 , evalle:6855 ,  eresto:2889},
+        {periodo:202309, csc:86, pa:36, ent2:0, epta:174  , evalle:441 ,   eresto:168},
+        {periodo:202308, csc:86, pa:37, ent2:0, epta:2803 , evalle:7184 ,  eresto:2879},
+        {periodo:202307, csc:86, pa:40, ent2:0, epta:194  , evalle:520 ,   eresto:198},
+        {periodo:202306, csc:86, pa:42, ent2:0, epta:3279 , evalle:9523 ,  eresto:3274},
     ]
 
     let datos = datosT2;
@@ -111,16 +111,16 @@ function generarFormulario(tipo, numPeriodos) {
                     <p>${i+1}</p>
                 </div>
                 <div class="col mb-3">
-                    <input class="form-control" id="periodo" type="text" name="periodo" placeholder="AAAAMM" pattern="[0-9]{6}" minlength="6" maxlength="6" title="La fecha debe estar en formato AAAAMM. Ej: 202403" required>
+                    <input class="form-control" id="periodo" type="text" name="periodo" placeholder="AAAAMM" pattern="[0-9]{6}" minlength="6" maxlength="6" title="La fecha debe estar en formato AAAAMM. Ej: 202403" value="" required>                    
                 </div>`;                
                 
         if (tipo === 'T3' || tipo === 'T2'){
             html += `
                 <div class="col mb-3">
-                <input class="form-control" type="number" step="0.01" min="0" name="csc" placeholder="" value="${datos[i].csc}" required>                                        
+                <input class="form-control" type="number" step="0.01" min="0" name="csc" placeholder="" value="" required>                                        
                 </div>
                 <div class="col mb-3">
-                    <input class="form-control" type="number" step="0.01" min="0" name="pa" placeholder="" value="${datos[i].pa}" required>                                        
+                    <input class="form-control" type="number" step="0.01" min="0" name="pa" placeholder="" value="" required>                                        
                 </div>`;
         
 
@@ -130,18 +130,18 @@ function generarFormulario(tipo, numPeriodos) {
                         <input class="form-control" type="number" step="0.01" min="0" name="ent2" placeholder="" value="0">                                       
                     </div>
                     <div class="col mb-3">
-                        <input class="form-control" type="number" step="0.01" min="0" name="epta" placeholder="" value="${datos[i].epta}" required>
+                        <input class="form-control" type="number" step="0.01" min="0" name="epta" placeholder="" value="" required>
                     </div>
                     <div class="col mb-3">
-                        <input class="form-control" type="number" step="0.01" min="0" name="evalle" placeholder="" value="${datos[i].evalle}" required>
+                        <input class="form-control" type="number" step="0.01" min="0" name="evalle" placeholder="" value="" required>
                     </div>
                     <div class="col mb-3">
-                        <input class="form-control" type="number" step="0.01" min="0" name="eresto" placeholder="" value="${datos[i].eresto}" required>
+                        <input class="form-control" type="number" step="0.01" min="0" name="eresto" placeholder="" value="" required>
                     </div>`;
             } else if(tipo==='T2') {
             html += `
                     <div class="col mb-3">
-                        <input class="form-control" type="number" step="0.01" min="0" name="ent2" placeholder="" value="${datos[i].ent2}" required>                                       
+                        <input class="form-control" type="number" step="0.01" min="0" name="ent2" placeholder="" value="" required>                                       
                     </div>
                     <div class="col mb-3 hidden">
                         <input class="form-control" type="number" step="0.01" min="0" name="epta" placeholder="" value="0" disabled>
@@ -162,7 +162,7 @@ function generarFormulario(tipo, numPeriodos) {
                         <input class="form-control" type="number" step="0.01" min="0" name="pa" placeholder="" value="0" disabled>                                        
                     </div>
                     <div class="col mb-3">
-                        <input class="form-control" type="number" step="0.01" min="0" name="ent2" placeholder="" value="${datos[i].ent2}" required>                                       
+                        <input class="form-control" type="number" step="0.01" min="0" name="ent2" placeholder="" value="" required>                                       
                     </div>
                     <div class="col mb-3 hidden">
                         <input class="form-control" type="number" step="0.01" min="0" name="epta" placeholder="" value="0" disabled>
@@ -187,7 +187,7 @@ function generarFormulario(tipo, numPeriodos) {
     return html;
 }
 
-const cantidadPeriodos = 11;
+const cantidadPeriodos = 12;
 
 // Generar los formularios T2 y T3 con 2 periodos cada uno
 const formularioT1HTML = generarFormulario('T1', cantidadPeriodos); 

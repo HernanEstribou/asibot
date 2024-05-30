@@ -1,4 +1,5 @@
 import { loadJSONSync, formatearCSV, descargarCSV } from './manejoDeArchivos.js';
+import { obtenerFechaHoy, generarPdf } from './generarPdf2.js';
 
 
 function calcularRangoSimulacion(datosFormulario, tarifaOriginal){
@@ -200,6 +201,15 @@ function recuperarDatosFormulario(formulario){
     return diccionario;
 }
 
+function obtenerResolucion(cuadroTarifario){
+
+    for (const i in cuadroTarifario){
+        if (cuadroTarifario[i].resolucion) {            
+            return cuadroTarifario[i].resolucion;            
+        }
+    }     
+}
+
 
 function procesarFormulario(empresa, tarifaOriginal, tension, peaje, formulario, rutaJson) {    
     
@@ -209,7 +219,9 @@ function procesarFormulario(empresa, tarifaOriginal, tension, peaje, formulario,
     let cuadroTarifario;
     let min = Infinity;
     let potenciaOptima;
-    let ultimoPeriodo = 0; 
+    let categoriaOptima;
+    let ultimoPeriodo = 0;
+    let resolucion; 
     
     const datosFormulario = recuperarDatosFormulario(formulario);
     console.log(`Se envió el formulario ${tarifaOriginal}`);
@@ -227,8 +239,11 @@ function procesarFormulario(empresa, tarifaOriginal, tension, peaje, formulario,
     
     console.log("Empresa seleccionada " + empresa);
     console.log(`Las tarifas son: `);
-    console.log(cuadroTarifario);
-    
+    console.log(cuadroTarifario);    
+
+    //Obtener número de resolución
+    resolucion = obtenerResolucion(cuadroTarifario);
+    console.log("Resolucion: " + resolucion);      
 
     //----------------------- 
     //Calculo de importe Real
@@ -373,6 +388,7 @@ function procesarFormulario(empresa, tarifaOriginal, tension, peaje, formulario,
         if (importeSimuladoAcumulado < min){
             min = importeSimuladoAcumulado;
             potenciaOptima = csc;
+            categoriaOptima = tarifaSimulada.tarifa;
         } 
     }
     importeAnualSimuladoProyectado = (min / cantidadDePeriodos) * 12;
@@ -381,14 +397,14 @@ function procesarFormulario(empresa, tarifaOriginal, tension, peaje, formulario,
     console.log("Importe anual Real Acumulado: " + importeRealAcumulado);
     console.log("Importe anual Real Proyectado: " + importeAnualRealProyectado)
     console.log("--------------------------------------------------------------")     
-    console.log("Minimo importe Simulado Acumulado: " + min + " | Csc optima: " + potenciaOptima);
+    console.log("Minimo importe Simulado Acumulado: " + min + " | Csc optima: " + potenciaOptima + "| Categoría optima:" + categoriaOptima);
     console.log("Minimo importe Simulado Proyectado: " + importeAnualSimuladoProyectado)  
     console.log("Lista de importes anuales por tarifa:");
     console.log(listaImportesSimulados);    
     
-    const [titulo, mensaje] = generarMensaje(importeAnualSimuladoProyectado, importeAnualRealProyectado, cscMin, cscMax, cantidadDePeriodos, cscContratada, potenciaOptima)   
+    const [titulo, mensaje, oportunidad, ahorro] = generarMensaje(importeAnualSimuladoProyectado, importeAnualRealProyectado, cscMin, cscMax, cantidadDePeriodos, cscContratada, potenciaOptima)   
     
-    popupResultado(titulo, mensaje);    
+    popupResultado(titulo, mensaje, oportunidad, tarifaOriginal, categoriaOptima, potenciaOptima, ahorro, datosFormulario, empresa, resolucion);    
 
     let contenidoCSV = formatearCSV(datosPeriodos);    
     descargarCSV(contenidoCSV, "datos_periodos.csv");
@@ -396,7 +412,9 @@ function procesarFormulario(empresa, tarifaOriginal, tension, peaje, formulario,
 }
 
 function generarMensaje(importeAnualSimuladoProyectado, importeAnualRealProyectado, cscMin, cscMax, cantidadDePeriodos, cscContratada, potenciaOptima){
+    let ahorro = 0;
     let titulo = "";
+    let oportunidad = false;
     let mensaje = `Limite inferior: ${cscMin}<br>
                    Limite superior: ${cscMax}<br>
                    Se utilizaron ${cantidadDePeriodos} facturas significativas<br><br>
@@ -406,7 +424,8 @@ function generarMensaje(importeAnualSimuladoProyectado, importeAnualRealProyecta
                    La potencia optima calculada es: ${potenciaOptima}<br>                  
                    ` 
     if (importeAnualSimuladoProyectado < importeAnualRealProyectado){
-        let ahorro = importeAnualRealProyectado - importeAnualSimuladoProyectado;
+        oportunidad = true;
+        ahorro = importeAnualRealProyectado - importeAnualSimuladoProyectado;
         ahorro = Math.round(ahorro * 100) / 100;
         titulo = "Se detectó posibilidad de ahorro";
         mensaje += `Generando un importe anual proyectado de <br>
@@ -414,19 +433,29 @@ function generarMensaje(importeAnualSimuladoProyectado, importeAnualRealProyecta
                     Esto genera un ahorro de: <b>${ahorro}</b>
                     `       
     } else {
+        oportunidad = false;
         console.log("No se detectó oportunidad de ahorro");
         titulo = "No se detectó oportunidad de ahorro";
         //mensaje +=`No se detectó oportunidad de ahorro`
     }
     
-    return [titulo, mensaje];
+    return [titulo, mensaje, oportunidad, ahorro];
 }
 
-function popupResultado(titulo, mensaje){
+
+function popupResultado(titulo, mensaje, oportunidad, tarifaOriginal, categoriaOptima, potenciaOptima, ahorro, datosFormulario, empresa, resolucion){
+    const fecha = obtenerFechaHoy();
+
     //Sweet Alert
     Swal.fire({
         title: titulo,
-        html: mensaje,               
+        html: mensaje,
+        showDenyButton: true,        
+        denyButtonText: "Descargar",               
+    }).then((result) =>{
+        if (result.isDenied){
+            generarPdf(fecha, tarifaOriginal, categoriaOptima, potenciaOptima, oportunidad, ahorro, datosFormulario, empresa, resolucion);
+        }
     });
 }
 
