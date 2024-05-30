@@ -114,7 +114,7 @@ hr{
     
 }
 
-.container-empresas, .container-tarifas, .container-tension, .container-peaje, .container-menu{
+.container-empresas, .container-tarifas, .container-tension, .container-peaje, .container-menu, .info-container-section{
     min-height: 100vh;     
     display: flex;
     flex-direction: column;
@@ -123,16 +123,24 @@ hr{
     
 }
 
+/*.info-container-section{
+    min-height: 96vh;    
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    justify-content: center;   
+}*/
+
 .container-empresas{
     background-color: var(--dark);
 }
 
 .container-tarifas{
-    background-color: aliceblue;
+    background-color: var(--dark);
 }
 
 .container-tension{
-    background-color: rgb(255, 255, 255);
+    background-color: var(--dark);
 }
 
 .container-peaje{
@@ -161,18 +169,35 @@ hr{
     background-color: rgb(243, 245, 247);
 }
 
-.info-container{
+/*.info-container{
     text-align: left;
-    width: fit-content; /* Ajusta el ancho al contenido */
-    margin-left: auto; /* Establece el margen izquierdo a auto */
-    margin-right: auto; /* Establece el margen derecho a auto */
-    padding: 2%;
+    width: fit-content; 
+    margin-left: auto; 
+    margin-right: auto;     
     background: #f4f9ff;
-    border: 1px solid;
+    border: 1px solid;    
+   
 }
 
-.info-container a{
-    margin-right: 5px;
+.info-container span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;    
+    
+    display: inline-block; 
+    vertical-align: middle;
+  
+}*/
+
+.info-container{
+    text-align: left;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#outer-t3-container, #outer-t2-container, #outer-t1-container{
+    padding-top: 14vh;
 }
 
 .hidden{

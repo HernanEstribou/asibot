@@ -49,8 +49,7 @@
                 
             </div>
             
-        </div>
-        
+        </div>        
         
     </div>
     
@@ -116,14 +115,43 @@
     </div>
 
     <div id="container-t1" class="container-t1 container-menu hidden">
-        <!--<hr>-->                
-        <div class="info-container">
+                       
+        <!--<div class="info-container">
             <a onclick="verFactura('Período', 'Año y Mes')" class="info-icon"><i class="fa-regular fa-circle-question fa-lg"></i></a>            
             <span><span class="campo">Período:</span> Año y Mes en formato AAAAMM</span><br>            
             <a onclick="verFactura('EnT1','Energía T1')" class="info-icon"><i class="fa-regular fa-circle-question fa-lg"></i></a>
             <span><span class="campo">EnT2</span>: Energía T2</span><br> 
-        </div>                   
-        <div class="container mt-4">
+        </div>-->
+        <div class="info-container-section">
+            <h2 class="subtitulo">INFORMACIÓN NECESARIA PARA EL TEST</h2>
+        
+            <div class="card card-settings">
+                <div class="card-body">                
+                    
+                    <p>Para que podamos realizar los cálculos deberás ingresar la información que se detalla a continuación:</p>
+                    
+                    <div class="card-body info-container">
+                        <a onclick="verFactura('Período', 'Año y Mes')" class="info-icon"><i class="fa-regular fa-circle-question fa-lg"></i></a>            
+                        <span><span class="campo">Período:</span> Año y Mes en formato AAAAMM</span><br>            
+                        <a onclick="verFactura('EnT1','Energía T1')" class="info-icon"><i class="fa-regular fa-circle-question fa-lg"></i></a>
+                        <span><span class="campo">EnT1</span>: Energía T1</span><br>         
+                    </div>                                   
+                    
+                </div>
+                <div class="card advertencia ">
+                    <div class="card-body">
+                        <b><p>Necesitás las últimas 12 facturas mensuales consecutivas de electricidad.</p></b>
+                        <a href="#outer-t1-container" class="btn btn-primary" onclick="cargarFormulario()">Cargar Formulario</a>
+                    </div>
+                    
+                </div>
+                
+            </div>               
+            
+        </div>
+
+        
+        <div id= "outer-t1-container" class="container mt-4">
             <div class="card form-card border-secondary">
                 <div class="card-header">Datos a ingresar de FACTURAS T1</div>
                     <div class="card-body" id="formulario-t1-container">
@@ -136,8 +164,8 @@
     </div>
     
     <div id="container-t2" class="container-t2 container-menu hidden">
-        <!--<hr>-->                
-        <div class="info-container">
+                       
+        <!--<div class="info-container">
             <a onclick="verFactura('Período', 'Año y Mes')" class="info-icon"><i class="fa-regular fa-circle-question fa-lg"></i></a>            
             <span><span class="campo">Período:</span> Año y Mes en formato AAAAMM</span><br>
             <a onclick="verFactura('CSC','Capacidad de suministro contratada')" class="info-icon"><i class="fa-regular fa-circle-question fa-lg"></i></a>
@@ -152,11 +180,53 @@
             <div class="card form-card border-secondary">
                 <div class="card-header">Datos a ingresar de FACTURAS T2</div>
                     <div class="card-body" id="formulario-t2-container">
+                        
+                    </div>
+                </div>
+            </div>
+        </div>-->
+
+        <div class="info-container-section">
+            <h2 class="subtitulo">INFORMACIÓN NECESARIA PARA EL TEST</h2>
+        
+            <div class="card card-settings">
+                <div class="card-body">                
+                    
+                    <p>Para que podamos realizar los cálculos deberás ingresar la información que se detalla a continuación:</p>
+                    
+                    <div class="card-body info-container">
+                        <a onclick="verFactura('Período', 'Año y Mes')" class="info-icon"><i class="fa-regular fa-circle-question fa-lg"></i></a>            
+                        <span><span class="campo">Período:</span> Año y Mes en formato AAAAMM</span><br>
+                        <a onclick="verFactura('CSC','Capacidad de suministro contratada')" class="info-icon"><i class="fa-regular fa-circle-question fa-lg"></i></a>
+                        <span><span class="campo">CSC:</span> Capacidad de suministro contratada</span><br>
+                        <a onclick="verFactura('PA','Potencia adquirida')" class="info-icon"><i class="fa-regular fa-circle-question fa-lg"></i></a>
+                        <span><span class="campo">PA</span> : Potencia adquirida</span><br>
+                        <a onclick="verFactura('EnT2','Energía T2')" class="info-icon"><i class="fa-regular fa-circle-question fa-lg"></i></a>
+                        <span><span class="campo">EnT2</span>: Energía T2</span><br>          
+                    </div>                                   
+                    
+                </div>
+                <div class="card advertencia ">
+                    <div class="card-body">
+                        <b><p>Necesitás las últimas 12 facturas mensuales consecutivas de electricidad.</p></b>
+                        <a href="#outer-t2-container" class="btn btn-primary" onclick="cargarFormulario()">Cargar Formulario</a>
+                    </div>
+                    
+                </div>
+                
+            </div>               
+            
+        </div>
+        <div id="outer-t2-container" class="container mt-4">
+            <div class="card form-card border-secondary">
+                <div class="card-header">Datos a ingresar de FACTURAS T2</div>
+                    <div class="card-body" id="formulario-t2-container">
                         <!-- Acá va el formulario T2 -->
                     </div>
                 </div>
             </div>
         </div>
+        
         
     </div>
 
@@ -164,23 +234,45 @@
         <!--<hr>-->
         <!--<p>Cargue los datos de las últimas 12 facturas:</p>-->
         
-        <div class="info-container">
-            <a onclick="verFactura('Período','Año y Mes')" class="info-icon"><i class="fa-regular fa-circle-question fa-lg"></i></a>
-            <span><span class="campo">Período:</span> Año y Mes en formato AAAAMM</span><br>
-            <a onclick="verFactura('CSC', 'Capacidad de suministro contratada')" class="info-icon"><i class="fa-regular fa-circle-question fa-lg"></i></a>
-            <span><span class="campo">CSC:</span> Capacidad de suministro contratada</span><br>
-            <a onclick="verFactura('PA', 'Potencia adquirida')" class="info-icon"><i class="fa-regular fa-circle-question fa-lg"></i></a>
-            <span><span class="campo">PA:</span> Potencia adquirida</span><br>
-            <a onclick="verFactura('EPta', 'Energía en Punta')" class="info-icon"><i class="fa-regular fa-circle-question fa-lg"></i></a>
-            <span><span class="campo">EPta:</span> Energía en Punta</span><br>
-            <a onclick="verFactura('EValle', 'Energía en Valle')" class="info-icon"><i class="fa-regular fa-circle-question fa-lg"></i></a>
-            <span><span class="campo">EValle:</span> Energía en Valle</span><br>
-            <a onclick="verFactura('EResto','Energía en Resto')" class="info-icon"><i class="fa-regular fa-circle-question fa-lg"></i></a>
-            <span><span class="campo">EResto:</span> Energía en Resto</span><br> 
+        <div class="info-container-section">
+            <h2 class="subtitulo">INFORMACIÓN NECESARIA PARA EL TEST</h2>
+        
+            <div class="card card-settings">
+                <div class="card-body">                
+                    
+                    <p>Para que podamos realizar los cálculos deberás ingresar la información que se detalla a continuación:</p>
+                    <!--<div class="">-->
+                        <div class="card-body info-container">
+                            <a onclick="verFactura('Período','Año y Mes')" class="info-icon"><i class="fa-regular fa-circle-question fa-lg"></i></a>
+                            <span><span class="campo">Período:</span> Año y Mes en formato AAAAMM</span><br>
+                            <a onclick="verFactura('CSC', 'Capacidad de suministro contratada')" class="info-icon"><i class="fa-regular fa-circle-question fa-lg"></i></a>
+                            <span><span class="campo">CSC:</span> Capacidad de suministro contratada</span><br>
+                            <a onclick="verFactura('PA', 'Potencia adquirida')" class="info-icon"><i class="fa-regular fa-circle-question fa-lg"></i></a>
+                            <span><span class="campo">PA:</span> Potencia adquirida</span><br>
+                            <a onclick="verFactura('EPta', 'Energía en Punta')" class="info-icon"><i class="fa-regular fa-circle-question fa-lg"></i></a>
+                            <span><span class="campo">EPta:</span> Energía en Punta</span><br>
+                            <a onclick="verFactura('EValle', 'Energía en Valle')" class="info-icon"><i class="fa-regular fa-circle-question fa-lg"></i></a>
+                            <span><span class="campo">EValle:</span> Energía en Valle</span><br>
+                            <a onclick="verFactura('EResto','Energía en Resto')" class="info-icon"><i class="fa-regular fa-circle-question fa-lg"></i></a>
+                            <span><span class="campo">EResto:</span> Energía en Resto</span><br>                 
+                        </div>
+                    <!--</div>-->                
+                    
+                </div>
+                <div class="card advertencia ">
+                    <div class="card-body">
+                        <b><p>Necesitás las últimas 12 facturas mensuales consecutivas de electricidad.</p></b>
+                        <a href="#outer-t3-container" class="btn btn-primary" onclick="cargarFormulario()">Cargar Formulario</a>
+                    </div>
+                    
+                </div>
+                
+            </div>               
+            
         </div>      
                
         
-        <div class="container mt-4">
+        <div id="outer-t3-container" class="container mt-4">
             <div class="card form-card border-secondary">
                 <div class="card-header">Datos a ingresar de FACTURAS T3</div>
                     <div class="card-body" id="formulario-t3-container">

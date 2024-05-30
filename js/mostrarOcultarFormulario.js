@@ -3,7 +3,9 @@ function iniciarTest(){
     let buttonReset = document.querySelector(".reiniciar");
 
     containerEmpresas.classList.remove('hidden');
+    
     buttonReset.classList.remove('hidden');
+    buttonReset.classList.remove('selected');
 }
 
 function reiniciarTest(){
@@ -18,6 +20,7 @@ function reiniciarTest(){
 
     historicalButtons.forEach(button => {
         button.classList.add('hidden');
+        button.classList.add('selected');
     });
 
     containerMenu.forEach(container => {
@@ -29,6 +32,7 @@ function reiniciarTest(){
 function seleccionarEmpresa(selectedButton){
     let reiniciar = document.querySelector(".reiniciar");
     let empresaSelected = document.querySelector(".empresa-selected");
+    //let containerHome = document.querySelector(".container-home");
     let containerTarifas = document.querySelector(".container-tarifas");
     let edenor = document.querySelector(".button-edenor");
     let edesur = document.querySelector(".button-edesur"); 
@@ -48,6 +52,7 @@ function seleccionarEmpresa(selectedButton){
     empresaSelected.textContent = selectedButton.textContent; 
     
     containerTarifas.classList.remove("hidden");
+    
     reiniciar.classList.remove("hidden");
 }
 
@@ -110,7 +115,6 @@ function seleccionarTarifa(selectedButton) {
     tarifaSelected.textContent = selectedButton.textContent;    
     
 }
-
 
 
 function seleccionarTension(selectedButton){
@@ -177,4 +181,10 @@ function seleccionarPeaje(selectedButton){
     peajeSelected.textContent = selectedButton.textContent;
     
        
+}
+
+function cargarFormulario(){
+    let historicalButtons = document.querySelector(".historical-buttons");
+    historicalButtons.classList.add("hidden");
+    
 }
