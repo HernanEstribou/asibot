@@ -1,3 +1,4 @@
+/******** General styles *********/
 :root {
     --dark: #132934;
     --light-grey: rgb(245, 245, 255);
@@ -6,29 +7,22 @@
     --buttons: #132934;        
 }
 
-header{
-    /*min-height: 12vh;*/   
-    
+a{
+    text-decoration: none;
+}
+
+li{
+    list-style: none;
 }
 
 nav{
     display: flex;
     align-items: center;
     min-height: 12vh;
-
-    position: fixed; /* Fija el navbar en la parte superior */
-    top: 0; /* Posición en la parte superior de la página */
-    width: 100%; /* Ancho completo */
-
-    
-    /*opacity: 0.95;*/
-    z-index: 1000; /* Asegura que esté por encima de otros elementos */
-
-    
-}
-
-li{
-    list-style: none;
+    position: fixed; 
+    top: 0; 
+    width: 100%;    
+    z-index: 1000;     
 }
 
 body{   
@@ -37,11 +31,8 @@ body{
     flex-direction: column;
     margin: 0;
     min-height: 100vh;
-    padding: 0;
-    
-    
+    padding: 0;      
 }
-
 
 footer {
     position: fixed;
@@ -55,103 +46,44 @@ footer {
     margin-top: auto;
 }
 
-a{
-    text-decoration: none;
-}
-
 footer a {
     text-decoration: none;
     color: #f4f9ff;
 }
 
-
-hr{
-    margin-bottom: 1%;
-    margin-top: 1.5%;
-    width: 40%;
-    margin-left: auto; /* Establece el margen izquierdo a auto */
-    margin-right: auto; /* Establece el margen derecho a auto */
-}
-
-.btn-custom{
-    background-color: var(--dark);
-    color: #f4f9ff;
-}
-
+/****** Header ********/
 .titulo{
     font-size: 2rem;
-    background-color: var(--main);
-    /*height: 12vh;*/
+    background-color: var(--main);    
 }
 
-.historical-buttons{
-    display: flex;
-    flex-direction: column;    
-    position: fixed;
-    top: 14vh;
-    left: 2vh;    
-    z-index: 1000; /* Asegura que esté por encima de otros elementos */
+.svg{    
+    margin:1%; 
+    height: 50px;    
 }
 
-.historical-btn{
-    margin:2% 0;
-    /*width: fit-content;*/
-}
-
-.empresa-selected, .tarifa-selected, .tension-selected, .peaje-selected{
-    
-    
+/****** Containers ******/ 
+#outer-t3-container, #outer-t2-container, #outer-t1-container{
+    padding-top: 14vh;
 }
 
 .container-home{
-    
     min-height: 96vh;
-    /*background-color: aquamarine;*/
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Alinea verticalmente */
-    justify-content: center; /* Alinea horizontalmente (opcional) */
-    
 }
 
 .container-empresas, .container-tarifas, .container-tension, .container-peaje, .container-menu, .info-container-section{
-    min-height: 100vh;     
+    min-height: 100vh;
+}
+
+.container-home,.container-empresas, .container-tarifas, .container-tension, .container-peaje, .container-menu, .info-container-section{         
     display: flex;
     flex-direction: column;
     align-items: center; /* Alinea verticalmente */
-    justify-content: center; /* Alinea horizontalmente (opcional) */
-    
+    justify-content: center; /* Alinea horizontalmente*/    
 }
 
-/*.info-container-section{
-    min-height: 96vh;    
-    display: flex;
-    flex-direction: column;
-    align-items: center; 
-    justify-content: center;   
-}*/
-
-.container-empresas{
+.container-empresas, .container-tarifas, .container-tension, .container-peaje{
     background-color: var(--dark);
-}
-
-.container-tarifas{
-    background-color: var(--dark);
-}
-
-.container-tension{
-    background-color: var(--dark);
-}
-
-.container-peaje{
-    background-color: var(--dark);
-}
-
-.svg{
-    
-    margin:1%; /* Tamaño específico */
-    height: 50px; /* Mantén la relación de aspecto */
-    
 }
 
 .card-settings{
@@ -164,30 +96,10 @@ hr{
 
 .advertencia{
     width: fit-content;
-    margin-left: auto; /* Establece el margen izquierdo a auto */
-    margin-right: auto; /* Establece el margen derecho a auto */
+    margin-left: auto; 
+    margin-right: auto; 
     background-color: rgb(243, 245, 247);
 }
-
-/*.info-container{
-    text-align: left;
-    width: fit-content; 
-    margin-left: auto; 
-    margin-right: auto;     
-    background: #f4f9ff;
-    border: 1px solid;    
-   
-}
-
-.info-container span {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;    
-    
-    display: inline-block; 
-    vertical-align: middle;
-  
-}*/
 
 .info-container{
     text-align: left;
@@ -196,10 +108,26 @@ hr{
     margin-right: auto;
 }
 
-#outer-t3-container, #outer-t2-container, #outer-t1-container{
-    padding-top: 14vh;
+/***** Buttons *********/
+.btn-custom{
+    background-color: var(--dark);
+    color: #f4f9ff;
 }
 
+.historical-buttons{
+    display: flex;
+    flex-direction: column;    
+    position: fixed;
+    top: 14vh;
+    left: 2vh;    
+    z-index: 1000; 
+}
+
+.historical-btn{
+    margin:2% 0;    
+}
+
+/***** Esthetic *****/
 .hidden{
     display: none;
 }
