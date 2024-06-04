@@ -81,19 +81,7 @@ async function generarPdf(fecha, tarifaOriginal, categoriaOptima, potenciaOptima
     y: height - 80,
     size: 20,
     color: rgb(0, 0, 0),
-  }); 
-
-  // Insertar primer pagina
-  /*firstPage.drawText(primerParrafo, {
-    x: x,
-    y: height - 120,
-    width: textWidth,
-    height: textHeight,
-    size: fontSize,
-    lineHeight: 14,
-    maxWidth: textWidth,
-    color: rgb(0, 0, 0),     
-  });*/
+  });  
 
   if (oportunidad){
     if (tarifaOriginal == categoriaOptima) {
@@ -121,31 +109,7 @@ async function generarPdf(fecha, tarifaOriginal, categoriaOptima, potenciaOptima
   }
 
   let contenidoPrimerPagina = primerParrafo + puntoUno + puntoDos + puntoCuatro;
-
-  // Insertar primer pagina
-  /*firstPage.drawText(puntoUno, {
-    x: x,
-    y: height - 200,
-    width: textWidth,
-    height: textHeight,
-    size: fontSize,
-    lineHeight: 14,
-    maxWidth: textWidth,
-    color: rgb(0, 0, 0),     
-  });
-
-  
-  firstPage.drawText(puntoDos,{
-    x: x,
-    y: height - 240,
-    width: textWidth,
-    height: textHeight,
-    size: fontSize,
-    lineHeight: 14,
-    maxWidth: textWidth,
-    color: rgb(0, 0, 0),
-  });*/
-
+ 
   // Insertar primer pagina
   firstPage.drawText(contenidoPrimerPagina, {
     x: x,
