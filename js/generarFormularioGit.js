@@ -101,7 +101,7 @@ function generarFormulario(tipo, numPeriodos) {
         {periodo: 202306, csc:86, pa:42, ent2:0, epta:3279 , evalle:9523 ,  eresto:3274},
     ]
 
-    let datos = datosT2;
+    let datos = datosT3Dai;
     // Generar los periodos
     for (let i = 0; i < numPeriodos; i++) {
         html += `
