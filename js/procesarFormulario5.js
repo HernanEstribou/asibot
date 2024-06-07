@@ -426,7 +426,8 @@ function generarMensaje(importeAnualSimuladoProyectado, importeAnualRealProyecta
     if (importeAnualSimuladoProyectado < importeAnualRealProyectado){
         oportunidad = true;
         ahorro = importeAnualRealProyectado - importeAnualSimuladoProyectado;
-        ahorro = Math.round(ahorro * 100) / 100;
+        //ahorro = Math.round(ahorro * 100) / 100;
+        ahorro = parseFloat(ahorro.toFixed(2));
         titulo = "Se detectó posibilidad de ahorro";
         mensaje += `Generando un importe anual proyectado de <br>
                     <b>$${importeAnualSimuladoProyectado}</b><br><br>                    
@@ -438,7 +439,7 @@ function generarMensaje(importeAnualSimuladoProyectado, importeAnualRealProyecta
             'event_label': 'Ahorro calculado',
             'value': ahorro
         });
-        
+
     } else {
         oportunidad = false;
         console.log("No se detectó oportunidad de ahorro");

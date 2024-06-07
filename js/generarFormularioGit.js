@@ -59,17 +59,17 @@ function generarFormulario(tipo, numPeriodos) {
         </div>`;
 
     let datosT2 = [
-        {csc:40, pa:56,    ent2:19440, epta:0 , evalle:0 , eresto:0},
-        {csc:40, pa:62.40, ent2:21480, epta:0 , evalle:0 , eresto:0},
-        {csc:40, pa:65.60, ent2:23920, epta:0 , evalle:0 , eresto:0},
-        {csc:40, pa:68.40, ent2:23400, epta:0 , evalle:0 , eresto:0},
-        {csc:40, pa:68.80, ent2:16000, epta:0 , evalle:0 , eresto:0},
-        {csc:40, pa:18,    ent2:5240,  epta:0 , evalle:0 , eresto:0},
-        {csc:40, pa:15.8,  ent2:4280,  epta:0 , evalle:0 , eresto:0},
-        {csc:40, pa:15.6,  ent2:4320,  epta:0 , evalle:0 , eresto:0},
-        {csc:40, pa:15.6,  ent2:4160,  epta:0 , evalle:0 , eresto:0},
-        {csc:40, pa:15.6,  ent2:4200,  epta:0 , evalle:0 , eresto:0},
-        {csc:40, pa:15.6,   ent2:4320, epta:0 , evalle:0 , eresto:0}
+        {periodo: 202405, csc:40, pa:56,    ent2:19440, epta:0 , evalle:0 , eresto:0},
+        {periodo: 202403, csc:40, pa:62.40, ent2:21480, epta:0 , evalle:0 , eresto:0},
+        {periodo: 202403, csc:40, pa:65.60, ent2:23920, epta:0 , evalle:0 , eresto:0},
+        {periodo: 202402, csc:40, pa:68.40, ent2:23400, epta:0 , evalle:0 , eresto:0},
+        {periodo: 202401, csc:40, pa:68.80, ent2:16000, epta:0 , evalle:0 , eresto:0},
+        {periodo: 202312, csc:40, pa:18,    ent2:5240,  epta:0 , evalle:0 , eresto:0},
+        {periodo: 202311, csc:40, pa:15.8,  ent2:4280,  epta:0 , evalle:0 , eresto:0},
+        {periodo: 202310, csc:40, pa:15.6,  ent2:4320,  epta:0 , evalle:0 , eresto:0},
+        {periodo: 202309, csc:40, pa:15.6,  ent2:4160,  epta:0 , evalle:0 , eresto:0},
+        {periodo: 202308, csc:40, pa:15.6,  ent2:4200,  epta:0 , evalle:0 , eresto:0},
+        {periodo: 202307, csc:40, pa:15.6,   ent2:4320, epta:0 , evalle:0 , eresto:0}
     ]
 
     let datosT3 = [
@@ -101,7 +101,7 @@ function generarFormulario(tipo, numPeriodos) {
         {periodo: 202306, csc:86, pa:42, ent2:0, epta:3279 , evalle:9523 ,  eresto:3274},
     ]
 
-    let datos = datosT3Dai;
+    let datos = datosT2;
     // Generar los periodos
     for (let i = 0; i < numPeriodos; i++) {
         html += `
