@@ -427,7 +427,7 @@ function generarMensaje(importeAnualSimuladoProyectado, importeAnualRealProyecta
         oportunidad = true;
         ahorro = importeAnualRealProyectado - importeAnualSimuladoProyectado;
         //ahorro = parseFloat(Math.round(ahorro * 100) / 100);
-        ahorro = parseFloat(Math.round(ahorro));        
+        ahorro = parseFloat(Math.trunc(ahorro));        
         titulo = "Se detectó posibilidad de ahorro";
         mensaje += `Generando un importe anual proyectado de <br>
                     <b>$${importeAnualSimuladoProyectado}</b><br><br>                    
