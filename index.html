@@ -249,11 +249,31 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.5/dist/sweetalert2.all.min.js"></script>
     <script>
         function verFactura(campo, info){
+            const empresas = document.querySelectorAll('.button-edenor, .button-edesur');
+            const tarifas = document.querySelectorAll('.button-t1, .button-t2, .button-t3');
+
+            function parsearBotonSeleccionado(buttons){
+                let selectedButton
+                buttons.forEach(btn =>{
+                    if (btn.classList.contains('selected')){                    
+                        selectedButton = btn.value;                        
+                    }
+                });
+                return selectedButton;
+            }
+
+            const empresa = parsearBotonSeleccionado(empresas);     
+            const tarifa = parsearBotonSeleccionado(tarifas);
+
+            console.log(empresa);
+            console.log(tarifa);
+
             //Sweet Alert
             Swal.fire({
                 title: campo,
                 text: info,                
-                imageUrl: "./imgs/edenor.jpg",
+                //imageUrl: "./imgs/edenor.jpg",
+                imageUrl: `./imgs/informacion/${empresa}/${tarifa}/${campo}.jpg`,
                 imageWidth: 400,
                 //imageHeight: 200,
                 imageAlt: "Custom image"
