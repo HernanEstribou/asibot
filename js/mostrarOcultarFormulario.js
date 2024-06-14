@@ -54,6 +54,14 @@ function seleccionarEmpresa(selectedButton){
     containerTarifas.classList.remove("hidden");
     
     reiniciar.classList.remove("hidden");
+    
+    // Enviar un evento a Google Analytics
+    gtag('event', 'seleccionar_empresa', {
+        'event_category': 'Interacción',
+        'event_label': 'seleccion_empresa',
+        'value': 1
+    });
+
 }
 
 function seleccionarTarifa(selectedButton) { 
