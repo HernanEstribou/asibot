@@ -433,19 +433,25 @@ function generarMensaje(importeAnualSimuladoProyectado, importeAnualRealProyecta
                     <b>$${importeAnualSimuladoProyectado}</b><br><br>                    
                     Esto genera un ahorro de: <b>${ahorro}</b>
                     `       
-        // Enviar el valor de 'ahorro' como un evento a Google Analytics
-        gtag('event', 'valor_ahorro', {
-            'event_category': 'Calculo',
-            'event_label': 'Ahorro calculado',
-            'value': ahorro
-        });
-
     } else {
         oportunidad = false;
         console.log("No se detectó oportunidad de ahorro");
         titulo = "No se detectó oportunidad de ahorro";
         //mensaje +=`No se detectó oportunidad de ahorro`
     }
+
+    // Enviar el valor de 'ahorro' como un evento a Google Analytics
+    gtag('event', 'valor_ahorro', {
+        'event_category': 'Calculo',
+        'event_label': 'Ahorro calculado',
+        'value': ahorro
+    });
+
+    gtag('event', 'calculo_click', {
+        'event_category': 'Interacción',
+        'event_label': 'calcular_click',
+        'value': 1
+    });
     
     return [titulo, mensaje, oportunidad, ahorro];
 }
