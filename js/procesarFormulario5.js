@@ -441,7 +441,24 @@ function generarMensaje(importeAnualSimuladoProyectado, importeAnualRealProyecta
     }
 
     // Enviar el valor de 'ahorro' como un evento a Google Analytics
-    gtag('event', 'valor_ahorro', {
+    if (typeof gtag !== 'undefined') {
+        gtag('event', 'valor_ahorro', {
+            'event_category': 'Calculo',
+            'event_label': 'Ahorro calculado',
+            'value': ahorro
+        });
+    
+        gtag('event', 'calculo_click', {
+            'event_category': 'Interacción',
+            'event_label': 'calcular_click',
+            'value': 1
+        });
+      } else {
+        console.error('gtag is not defined');
+      }
+
+    // Enviar el valor de 'ahorro' como un evento a Google Analytics
+    /*gtag('event', 'valor_ahorro', {
         'event_category': 'Calculo',
         'event_label': 'Ahorro calculado',
         'value': ahorro
@@ -451,7 +468,7 @@ function generarMensaje(importeAnualSimuladoProyectado, importeAnualRealProyecta
         'event_category': 'Interacción',
         'event_label': 'calcular_click',
         'value': 1
-    });
+    });*/
     
     return [titulo, mensaje, oportunidad, ahorro];
 }
