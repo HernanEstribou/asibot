@@ -19,14 +19,17 @@
 
 </head>
 <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-ZF4NZT039G"></script>
+<!--<script async src="https://www.googletagmanager.com/gtag/js?id=G-ZF4NZT039G"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
 
   gtag('config', 'G-ZF4NZT039G');
-</script>
+</script>-->
+
+<script src="./js/cargarGoogleAnalytics.js"></script>
+
 <body>
     <header>        
         <nav class="nav titulo">
@@ -274,9 +277,12 @@
                 text: info,                
                 //imageUrl: "./imgs/edenor.jpg",
                 imageUrl: `./imgs/informacion/${empresa}/${tarifa}/${campo}.jpg`,
-                imageWidth: 400,
+                imageWidth: 500,
                 //imageHeight: 200,
-                imageAlt: "Custom image"
+                imageAlt: "Custom image",
+                customClass: {
+                popup: 'custom-swal-popup'
+                }
             });            
         }
     </script>
