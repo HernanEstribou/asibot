@@ -1,4 +1,4 @@
-/*async function loadGoogleAnalytics() {
+async function loadGoogleAnalytics() {
     try {
       const response = await fetch('./config.json');
       if (!response.ok) {
@@ -30,5 +30,5 @@
   }
   
   // Llamar a la función para cargar y configurar Google Analytics
-  loadGoogleAnalytics();*/
+  loadGoogleAnalytics();
   
