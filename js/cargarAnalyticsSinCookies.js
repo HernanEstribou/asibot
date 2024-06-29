@@ -33,6 +33,7 @@ async function initializeAnalytics() {
         'allow_ad_personalization_signals': false  // Deshabilitar la personalización de anuncios
       });
 
+      console.log(gtag);
       // Exportar gtag para que esté disponible globalmente
       window.gtag = gtag;
 
