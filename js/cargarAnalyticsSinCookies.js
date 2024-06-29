@@ -23,15 +23,16 @@ async function initializeAnalytics() {
       }
       
       gtag('js', new Date());
+      gtag('config', GA_MEASUREMENT_ID);
       
       // Configuración de Google Analytics 4 para no usar cookies y anonimizar IPs
-      gtag('config', GA_MEASUREMENT_ID, {
+      /*gtag('config', GA_MEASUREMENT_ID, {
         'storage': 'none',  // Deshabilitar el almacenamiento de cookies
         'anonymize_ip': true,  // Anonimizar IP
         'client_storage': 'none',  // Deshabilitar el almacenamiento de cookies en el cliente
         'allow_google_signals': false,  // Deshabilitar las señales de Google
         'allow_ad_personalization_signals': false  // Deshabilitar la personalización de anuncios
-      });
+      });*/
 
       console.log(gtag);
       // Exportar gtag para que esté disponible globalmente
