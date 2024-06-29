@@ -56,11 +56,15 @@ function seleccionarEmpresa(selectedButton){
     reiniciar.classList.remove("hidden");
     
     // Enviar un evento a Google Analytics
-    gtag('event', 'seleccionar_empresa', {
-        'event_category': 'Interacción',
-        'event_label': 'seleccion_empresa',
-        'value': 1
-    });
+    if (typeof gtag !== 'undefined') {
+        gtag('event', 'seleccionar_empresa', {
+            'event_category': 'Interacción',
+            'event_label': 'seleccion_empresa',
+            'value': 1
+        });
+    }   else {
+        console.error('gtag is not defined');
+    }
 
 }
 

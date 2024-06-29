@@ -402,7 +402,7 @@ function procesarFormulario(empresa, tarifaOriginal, tension, peaje, formulario,
     console.log("Lista de importes anuales por tarifa:");
     console.log(listaImportesSimulados);    
     
-    const [titulo, mensaje, oportunidad, ahorro] = generarMensaje(importeAnualSimuladoProyectado, importeAnualRealProyectado, cscMin, cscMax, cantidadDePeriodos, cscContratada, potenciaOptima)   
+    const [titulo, mensaje, oportunidad, ahorro] = generarMensaje(tarifaOriginal, importeAnualSimuladoProyectado, importeAnualRealProyectado, cscMin, cscMax, cantidadDePeriodos, cscContratada, potenciaOptima)   
     
     popupResultado(titulo, mensaje, oportunidad, tarifaOriginal, categoriaOptima, potenciaOptima, ahorro, datosFormulario, empresa, resolucion);    
 
@@ -411,7 +411,7 @@ function procesarFormulario(empresa, tarifaOriginal, tension, peaje, formulario,
     
 }
 
-function generarMensaje(importeAnualSimuladoProyectado, importeAnualRealProyectado, cscMin, cscMax, cantidadDePeriodos, cscContratada, potenciaOptima){
+function generarMensaje(tarifaOriginal, importeAnualSimuladoProyectado, importeAnualRealProyectado, cscMin, cscMax, cantidadDePeriodos, cscContratada, potenciaOptima){
     let ahorro = 0;
     let titulo = "";
     let oportunidad = false;
@@ -444,7 +444,7 @@ function generarMensaje(importeAnualSimuladoProyectado, importeAnualRealProyecta
     if (typeof gtag !== 'undefined') {
         gtag('event', 'valor_ahorro', {
             'event_category': 'Calculo',
-            'event_label': 'Ahorro calculado',
+            'event_label': `Ahorro ${tarifaOriginal}`,
             'value': ahorro
         });
     
@@ -456,19 +456,7 @@ function generarMensaje(importeAnualSimuladoProyectado, importeAnualRealProyecta
       } else {
         console.error('gtag is not defined');
       }
-
-    // Enviar el valor de 'ahorro' como un evento a Google Analytics
-    /*gtag('event', 'valor_ahorro', {
-        'event_category': 'Calculo',
-        'event_label': 'Ahorro calculado',
-        'value': ahorro
-    });
-
-    gtag('event', 'calculo_click', {
-        'event_category': 'Interacción',
-        'event_label': 'calcular_click',
-        'value': 1
-    });*/
+    
     
     return [titulo, mensaje, oportunidad, ahorro];
 }

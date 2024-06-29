@@ -7,8 +7,10 @@ async function loadGoogleAnalytics() {
       const config = await response.json();
       const googleAnalyticsId = config.googleAnalyticsId;
       console.log(googleAnalyticsId);
-  
+        
       // Cargar el script de Google Analytics con el ID recuperado
+      document.cookie = 'cookie_name=cookie_value; SameSite=None; Secure';
+
       const gtagScript = document.createElement('script');
       gtagScript.src = `https://www.googletagmanager.com/gtag/js?id=${googleAnalyticsId}`;
       gtagScript.async = true;
