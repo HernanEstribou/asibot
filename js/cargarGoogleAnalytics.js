@@ -6,11 +6,8 @@ async function loadGoogleAnalytics() {
       }
       const config = await response.json();
       const googleAnalyticsId = config.googleAnalyticsId;
-      console.log(googleAnalyticsId);
-        
-      // Cargar el script de Google Analytics con el ID recuperado
-      document.cookie = 'cookie_name=cookie_value; SameSite=None; Secure';
-
+      console.log(googleAnalyticsId);       
+      
       const gtagScript = document.createElement('script');
       gtagScript.src = `https://www.googletagmanager.com/gtag/js?id=${googleAnalyticsId}`;
       gtagScript.async = true;
@@ -22,7 +19,9 @@ async function loadGoogleAnalytics() {
         dataLayer.push(arguments);
       }
       gtag('js', new Date());
-      gtag('config', googleAnalyticsId);
+      gtag('config', googleAnalyticsId, {
+        'cookie_flags': 'SameSite=None;Secure'
+      });
   
       // Exportar gtag para que esté disponible globalmente
       window.gtag = gtag;

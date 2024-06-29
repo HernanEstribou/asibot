@@ -450,7 +450,7 @@ function generarMensaje(tarifaOriginal, importeAnualSimuladoProyectado, importeA
     
         gtag('event', 'calculo_click', {
             'event_category': 'Interacción',
-            'event_label': 'calcular_click',
+            'event_label': 'Click en Calcular',
             'value': 1
         });
       } else {

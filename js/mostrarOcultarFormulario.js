@@ -59,7 +59,7 @@ function seleccionarEmpresa(selectedButton){
     if (typeof gtag !== 'undefined') {
         gtag('event', 'seleccionar_empresa', {
             'event_category': 'Interacción',
-            'event_label': 'seleccion_empresa',
+            'event_label': 'Click en empresa',
             'value': 1
         });
     }   else {
